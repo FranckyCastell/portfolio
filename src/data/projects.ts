@@ -107,4 +107,15 @@ export const projects: Project[] = [
     tags: ["AWS", "Terraform", "ALB", "ASG", "WAFv2", "Route 53"],
     links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/aws-scalable-webapp" }],
   },
+  {
+    slug: "portfolio",
+    name: "Portfolio",
+    tagline: "This very site — built with Astro 5 and Tailwind v4.",
+    description:
+      "A static, SEO-optimized personal portfolio deployed on Cloudflare Workers. Features dark/light theme, View Transitions, JSON-LD structured data, self-hosted fonts, and PWA support. Typed content in TypeScript data files fully separated from presentation.",
+    year: "2026",
+    status: "active",
+    tags: ["Astro", "Tailwind CSS", "TypeScript", "Cloudflare", "SEO"],
+    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/portfolio" }],
+  },
 ];
