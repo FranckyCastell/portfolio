@@ -11,9 +11,10 @@ interface Props {
   title: string;
   description: string;
   path?: string;
+  ogType?: "website" | "profile";
 }
 
-const { title, description, path = "/" } = Astro.props;
+const { title, description, path = "/", ogType } = Astro.props;
 ---
 
 <!doctype html>
@@ -49,7 +50,7 @@ const { title, description, path = "/" } = Astro.props;
     </script>
 
     <ClientRouter />
-    <Seo title={title} description={description} path={path} />
+    <Seo title={title} description={description} path={path} type={ogType ?? "website"} />
 
     <link rel="preload" href="/fonts/inter-500.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin />

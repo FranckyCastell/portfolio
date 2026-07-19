@@ -14,6 +14,7 @@ export const navItems: NavItem[] = [
 export const social = {
   linkedin: "https://www.linkedin.com/in/francesc-castell",
   github: "https://github.com/FranckyCastell",
+  twitter: "https://x.com/francesccastell",
   email: "francesc.castell8@gmail.com",
   location: "Barcelona, Catalonia",
   availability: "Open to selected consulting engagements",

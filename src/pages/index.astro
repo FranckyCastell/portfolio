@@ -12,7 +12,7 @@ const featured = projects.filter((p) => p.featured).slice(0, 3);
 const currentRole = experiences[0];
 ---
 
-<BaseLayout title={title} description={description} path="/">
+<BaseLayout title={title} description={description} path="/" ogType="profile">
   <section class="relative min-h-[92svh] flex items-center overflow-hidden">
     <div class="absolute inset-0 grid-pattern opacity-30" aria-hidden="true"></div>
     <div class="noise" aria-hidden="true"></div>
