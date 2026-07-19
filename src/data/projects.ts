@@ -79,17 +79,6 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "mcp-shodan",
-    name: "Shodan MCP Server",
-    tagline: "Model Context Protocol server for Shodan intelligence.",
-    description:
-      "A TypeScript MCP server that exposes Shodan's API as tools consumable by any MCP-compatible agent (Bedrock AgentCore, Claude Desktop, custom agents). Built to the MCP specification with Smithery distribution.",
-    year: "2025",
-    status: "active",
-    tags: ["TypeScript", "MCP", "Shodan", "AI", "Agent tooling"],
-    links: [{ label: "Repo", url: "https://github.com/FranckyCastell/mcp-shodan" }],
-  },
-  {
     slug: "aws-cloud-native-webapp",
     name: "AWS Cloud-Native Web App",
     tagline: "Highly scalable and secure web application architecture.",
