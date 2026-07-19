@@ -13,23 +13,6 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "homer",
-    name: "Homer CLI",
-    tagline: "One tool to unify the Terraform and Packer lifecycle.",
-    description:
-      "A wrapper over Terraform and Packer that unifies and simplifies infrastructure lifecycle management. Flexible syntax and intuitive commands (plan, apply, build, destroy) ensure consistency across environments. Includes homer unlock to safely release Terraform state locks without leaving the terminal.",
-    year: "2025",
-    status: "active",
-    featured: true,
-    tags: ["Python", "Bash", "Terraform", "Packer", "CLI"],
-    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/homer" }],
-    highlights: [
-      "Single command interface for plan/apply/build/destroy across multiple environments.",
-      "Safe state-lock release with `homer unlock`.",
-      "Started as a 3-line alias, grew into a 400+ line CLI adopted internally.",
-    ],
-  },
-  {
     slug: "markus",
     name: "Markus",
     tagline: "Personal AI assistant with GraphRAG memory and clinical tools.",
@@ -47,51 +30,20 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "terraform-packer-wrapper",
-    name: "Terraform · Packer Wrapper",
-    tagline: "Interactive target selection for Terraform deploys.",
+    slug: "homer",
+    name: "Homer CLI",
+    tagline: "One tool to unify the Terraform and Packer lifecycle.",
     description:
-      "A bash automation that lists every resource in a Terraform plan, numbers them, and lets you apply a specific subset by typing a single number. Asks for confirmation before touching production and cleans up every temp file Terraform leaves behind. Works identically for Packer builds.",
-    year: "2024",
-    status: "shipped",
-    tags: ["Bash", "Terraform", "Packer", "Automation"],
-    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/terraform-packer-wrapper" }],
-    highlights: [
-      "Replaces tedious `-target=module.vpc.aws_security_group.web_sg_...` with a numbered picker.",
-      "Pre-production confirmation prompt and automatic temp cleanup.",
-      "Same UX for Packer builds — no remembering paths or arguments.",
-    ],
-  },
-  {
-    slug: "llmops-private-rag",
-    name: "Private LLMOps · Self-hosted RAG",
-    tagline: "An on-premise RAG ecosystem with zero cloud dependency.",
-    description:
-      "End-to-end private AI infrastructure: Proxmox LXC hosts running Ollama for inference, Qdrant as the vector store, Redis for caching and session state, and n8n as the orchestration layer. Tailscale glues every node together with zero-trust networking. Designed for privacy-sensitive workloads where data cannot leave the perimeter.",
+      "A wrapper over Terraform and Packer that unifies and simplifies infrastructure lifecycle management. Flexible syntax and intuitive commands (plan, apply, build, destroy) ensure consistency across environments. Includes homer unlock to safely release Terraform state locks without leaving the terminal.",
     year: "2025",
     status: "active",
     featured: true,
-    tags: ["Proxmox", "Ollama", "Qdrant", "Redis", "n8n", "Tailscale", "LLMOps"],
+    tags: ["Python", "Bash", "Terraform", "Packer", "CLI"],
+    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/homer" }],
     highlights: [
-      "Fully self-hosted — no data ever leaves the perimeter.",
-      "Hybrid edge architecture prioritizing privacy and resource efficiency.",
-      "n8n orchestrates retrieval, generation and human-in-the-loop checkpoints.",
-    ],
-  },
-  {
-    slug: "aws-cloud-native-webapp",
-    name: "AWS Cloud-Native Web App",
-    tagline: "Highly scalable and secure web application architecture.",
-    description:
-      "Production AWS reference architecture built with Terraform as Infrastructure as Code. Application Load Balancers with Auto Scaling Groups across multiple Availability Zones, AWS WAFv2 with SQLi and rate-limit rules, Route 53, S3 and managed databases. Engineered for resilience to traffic peaks and proactive security.",
-    year: "2025",
-    status: "shipped",
-    tags: ["AWS", "Terraform", "ALB", "ASG", "WAFv2", "Route 53"],
-    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/aws-scalable-webapp" }],
-    highlights: [
-      "Multi-AZ ALB + ASG for high availability and resiliency.",
-      "WAFv2 with SQLi and rate-limiting rules for threat protection.",
-      "IaC-only — no console clicks, fully reproducible.",
+      "Single command interface for plan/apply/build/destroy across multiple environments.",
+      "Safe state-lock release with `homer unlock`.",
+      "Started as a 3-line alias, grew into a 400+ line CLI adopted internally.",
     ],
   },
   {
@@ -102,6 +54,7 @@ export const projects: Project[] = [
       "Terraform codebase that provisions a complete high-availability AWS stack — VPC across multiple AZs, ALB in public subnets, EC2 Auto Scaling Group in private subnets with NAT Gateways, CloudWatch Agent for custom metrics, and Systems Manager for secure access without SSH. Built for production workloads that demand resilience.",
     year: "2025",
     status: "shipped",
+    featured: true,
     tags: ["AWS", "Terraform", "ALB", "ASG", "CloudWatch", "SSM", "HA"],
     links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/High-Availability-Architecture" }],
     highlights: [
@@ -118,7 +71,40 @@ export const projects: Project[] = [
       "A full-stack web application built with Django and Bootstrap for managing tutoring courses and academic support services. Includes production deployment checks and SQLite-backed data persistence.",
     year: "2023",
     status: "shipped",
+    featured: true,
     tags: ["Python", "Django", "Bootstrap", "Full-stack"],
     links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/FermyAcademy" }],
+  },
+  {
+    slug: "terraform-packer-wrapper",
+    name: "Terraform · Packer Wrapper",
+    tagline: "Interactive target selection for Terraform deploys.",
+    description:
+      "A bash automation that lists every resource in a Terraform plan, numbers them, and lets you apply a specific subset by typing a single number. Asks for confirmation before touching production and cleans up every temp file Terraform leaves behind. Works identically for Packer builds.",
+    year: "2024",
+    status: "shipped",
+    tags: ["Bash", "Terraform", "Packer", "Automation"],
+    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/terraform-packer-wrapper" }],
+  },
+  {
+    slug: "llmops-private-rag",
+    name: "Private LLMOps · Self-hosted RAG",
+    tagline: "An on-premise RAG ecosystem with zero cloud dependency.",
+    description:
+      "End-to-end private AI infrastructure: Proxmox LXC hosts running Ollama for inference, Qdrant as the vector store, Redis for caching and session state, and n8n as the orchestration layer. Tailscale glues every node together with zero-trust networking. Designed for privacy-sensitive workloads where data cannot leave the perimeter.",
+    year: "2025",
+    status: "active",
+    tags: ["Proxmox", "Ollama", "Qdrant", "Redis", "n8n", "Tailscale", "LLMOps"],
+  },
+  {
+    slug: "aws-cloud-native-webapp",
+    name: "AWS Cloud-Native Web App",
+    tagline: "Highly scalable and secure web application architecture.",
+    description:
+      "Production AWS reference architecture built with Terraform as Infrastructure as Code. Application Load Balancers with Auto Scaling Groups across multiple Availability Zones, AWS WAFv2 with SQLi and rate-limit rules, Route 53, S3 and managed databases. Engineered for resilience to traffic peaks and proactive security.",
+    year: "2025",
+    status: "shipped",
+    tags: ["AWS", "Terraform", "ALB", "ASG", "WAFv2", "Route 53"],
+    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/aws-scalable-webapp" }],
   },
 ];
