@@ -32,20 +32,21 @@ const { title, description, path = "/", ogType } = Astro.props;
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Anti-FOUC: set theme class before first paint + re-apply after View Transitions swap -->
     <script is:inline>
-      (function applyTheme() {
+      (function () {
         const stored = localStorage.getItem("theme");
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const isDark = stored ? stored === "dark" : prefersDark;
-        document.documentElement.classList.toggle("dark", isDark);
+        document.documentElement.classList.toggle("dark", stored ? stored === "dark" : prefersDark);
+
+        if (window.innerWidth < 768) {
+          document.documentElement.dataset.astroTransition = "false";
+        }
       })();
 
       document.addEventListener("astro:after-swap", function () {
         const stored = localStorage.getItem("theme");
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const isDark = stored ? stored === "dark" : prefersDark;
-        document.documentElement.classList.toggle("dark", isDark);
+        document.documentElement.classList.toggle("dark", stored ? stored === "dark" : prefersDark);
       });
     </script>
 
