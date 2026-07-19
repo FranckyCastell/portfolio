@@ -39,7 +39,8 @@ const { title, description, path = "/", ogType } = Astro.props;
         document.documentElement.classList.toggle("dark", stored ? stored === "dark" : prefersDark);
 
         if (window.innerWidth < 768) {
-          document.documentElement.dataset.astroTransition = "false";
+          // Desactivar View Transitions API nativa en móvil para evitar el "freeze"
+          document.startViewTransition = null;
         }
       })();
 
@@ -50,7 +51,7 @@ const { title, description, path = "/", ogType } = Astro.props;
       });
     </script>
 
-    <ClientRouter />
+    <ClientRouter fallback="swap" />
     <Seo title={title} description={description} path={path} type={ogType ?? "website"} />
 
     <link rel="preload" href="/fonts/inter-500.woff2" as="font" type="font/woff2" crossorigin />
@@ -111,11 +112,10 @@ const { title, description, path = "/", ogType } = Astro.props;
         );
 
         els.forEach((el) => {
-          if (el.getBoundingClientRect().top < window.innerHeight) {
-            el.classList.add("is-visible");
-          } else {
-            io.observe(el);
-          }
+          // Eliminamos getBoundingClientRect() sincrónico porque fuerza un reflow 
+          // (layout thrashing) durante el view transition / DOM swap, causando tirones.
+          // Dejamos que IntersectionObserver procese todo de forma asíncrona.
+          io.observe(el);
         });
       }
 
