@@ -30,6 +30,23 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "markus",
+    name: "Markus",
+    tagline: "Personal AI assistant with GraphRAG memory and clinical tools.",
+    description:
+      "A conversational AI companion that uses a Neo4j graph database to remember deep context — who you are, how you felt, and the causal chains behind your emotions. Unlike vanilla vector RAG, Markus extracts entities (people, emotions, topics) and links them with semantic relationships. Includes 16 integrated tools: Cognitive Behavioral Therapy exercises, SMART goal coaching, journaling, crisis intervention, and an interactive mind graph. Fully self-contained in Docker with zero SaaS dependencies.",
+    year: "2026",
+    status: "active",
+    featured: true,
+    tags: ["Python", "Neo4j", "GraphRAG", "FastAPI", "Docker", "LLM", "AI"],
+    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/markus" }],
+    highlights: [
+      "Neo4j graph memory with entity extraction and causal relationship mapping.",
+      "16 autonomous tools — CBT exercises, SMART goals, journaling, crisis intervention.",
+      "Streaming chat interface with LLM-driven function calling and mind graph visualisation.",
+    ],
+  },
+  {
     slug: "terraform-packer-wrapper",
     name: "Terraform · Packer Wrapper",
     tagline: "Interactive target selection for Terraform deploys.",
@@ -98,10 +115,38 @@ export const projects: Project[] = [
     year: "2025",
     status: "shipped",
     tags: ["AWS", "Terraform", "ALB", "ASG", "WAFv2", "Route 53"],
+    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/aws-scalable-webapp" }],
     highlights: [
       "Multi-AZ ALB + ASG for high availability and resiliency.",
       "WAFv2 with SQLi and rate-limiting rules for threat protection.",
       "IaC-only — no console clicks, fully reproducible.",
     ],
+  },
+  {
+    slug: "high-availability-architecture",
+    name: "AWS High Availability Architecture",
+    tagline: "Resilient multi-AZ stack with SSM and CloudWatch.",
+    description:
+      "Terraform codebase that provisions a complete high-availability AWS stack — VPC across multiple AZs, ALB in public subnets, EC2 Auto Scaling Group in private subnets with NAT Gateways, CloudWatch Agent for custom metrics, and Systems Manager for secure access without SSH. Built for production workloads that demand resilience.",
+    year: "2025",
+    status: "shipped",
+    tags: ["AWS", "Terraform", "ALB", "ASG", "CloudWatch", "SSM", "HA"],
+    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/High-Availability-Architecture" }],
+    highlights: [
+      "Multi-AZ deployment with private subnets, NAT Gateways, and ALB for fault tolerance.",
+      "CloudWatch Agent collecting CPU, memory, and disk metrics at 60s intervals.",
+      "SSM Session Manager for secure, SSH-less instance access.",
+    ],
+  },
+  {
+    slug: "fermy-academy",
+    name: "Fermy Academy",
+    tagline: "Django web platform for tutoring and academic support.",
+    description:
+      "A full-stack web application built with Django and Bootstrap for managing tutoring courses and academic support services. Includes production deployment checks and SQLite-backed data persistence.",
+    year: "2023",
+    status: "shipped",
+    tags: ["Python", "Django", "Bootstrap", "Full-stack"],
+    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/FermyAcademy" }],
   },
 ];
