@@ -8,7 +8,7 @@ A static, SEO-optimized personal portfolio built with Astro + Tailwind v4.
 Dense editorial aesthetic, command palette (⌘K), JSON-LD structured data, and
 first-class Lighthouse scores by default.
 
-[Live](https://francesccastell.dev) · [Features](#features) · [Quick start](#quick-start) · [Customize](#customize) · [Deploy](#deploy)
+[Live](https://francastell.com) · [Features](#features) · [Quick start](#quick-start) · [Customize](#customize) · [Deploy](#deploy)
 
 </div>
 
@@ -28,13 +28,12 @@ inline critical CSS, lazy non-critical assets.
 ## Features
 
 - **Astro 5 + Tailwind v4** — CSS-first `@theme` config, `@utility` directives, OKLCH color tokens.
-- **Command palette (⌘K)** — keyboard-navigable, filters sections + external links, `Esc` to close.
 - **Scroll chrome** — 1px progress bar bound to `requestAnimationFrame`, back-to-top button after 600px.
 - **Design tokens** — semantic surfaces, ink scale, accent, ring, shadows, animations, all in OKLCH.
 - **Compound UI primitives** — `Button` (variants × sizes), `Card`, `Tag`, `Section`.
 - **SEO** — `Person` + `WebSite` JSON-LD, canonical, `robots` meta with `max-image-preview:large`, `og:locale` alternates (en/es/ca), 1200×630 OG image.
 - **PWA-ready** — web manifest, maskable icons (192/512), apple-touch-icon, `theme-color` responsive.
-- **Accessibility** — skip link, focus ring on all interactives, `prefers-reduced-motion` honored, ARIA on dialog.
+- **Accessibility** — skip link, focus ring on all interactives, `prefers-reduced-motion` honored.
 - **Performance** — font preload + preconnect, `font-display: swap`, inlined small stylesheets, compressed HTML.
 - **Typed content** — all copy lives in `src/data/*.ts`, separated from presentation.
 
@@ -75,54 +74,53 @@ error.
 ```
 portfolio/
 ├── public/
-│   ├── favicon.svg              # primary icon
-│   ├── favicon-32.png           # fallback PNG
+│   ├── logo.png                  # transparent cloud logo (source)
+│   ├── logo-nav.png              # nav bar variant
+│   ├── favicon-{32,64,256}.png  # favicon set
 │   ├── apple-touch-icon.png     # 180×180 iOS
 │   ├── icon-{192,512}.png      # PWA maskable
 │   ├── og-image.{svg,png}       # 1200×630 social card
-│   ├── robots.txt               # static fallback (endpoint also served)
-│   └── site.webmanifest         # PWA manifest
+│   ├── robots.txt               # static fallback
+│   ├── site.webmanifest         # PWA manifest
+│   └── fonts/                   # self-hosted woff2 (Inter, Inter Tight, JetBrains Mono)
 │
 ├── src/
 │   ├── pages/
-│   │   ├── index.astro          # section composition
+│   │   ├── index.astro          # hero + current role + featured projects + CTA
+│   │   ├── about.astro          # full about page
+│   │   ├── experience.astro     # career timeline
+│   │   ├── projects.astro       # full project list
+│   │   ├── stack.astro          # skill groups
+│   │   ├── contact.astro        # contact channels
+│   │   ├── 404.astro            # not found
 │   │   ├── robots.txt.ts        # dynamic robots endpoint
 │   │   └── sitemap.xml.ts        # dynamic sitemap endpoint
 │   │
 │   ├── layouts/
-│   │   └── BaseLayout.astro     # shell · SEO · fonts · chrome
+│   │   ├── BaseLayout.astro     # shell · SEO · fonts · chrome · theme · mobile menu
+│   │   └── PageLayout.astro     # reusable page wrapper (eyebrow · heading · lede)
 │   │
 │   ├── components/
-│   │   ├── Nav.astro             # sticky header + ⌘K button
-│   │   ├── Hero.astro            # name + status terminal panel
-│   │   ├── About.astro           # bio + operating principles + education
-│   │   ├── Skills.astro          # 8-group stack grid
-│   │   ├── Experience.astro      # timeline (5 roles)
-│   │   ├── Projects.astro        # featured cards + "also built" list
-│   │   ├── Certifications.astro  # AWS certs with active status
-│   │   ├── Contact.astro         # CTA + social sidebar
-│   │   ├── Footer.astro
-│   │   ├── CommandPalette.astro  # ⌘K dialog with keyboard nav
+│   │   ├── Nav.astro             # sticky header · nav links · hamburger button
+│   │   ├── MobileMenu.astro      # full-screen mobile overlay
+│   │   ├── ThemeToggle.astro     # dark/light switch
 │   │   ├── ScrollChrome.astro    # progress bar + back-to-top
-│   │   ├── Seo.astro             # meta + JSON-LD + OG + Twitter
-│   │   └── ui/
-│   │       ├── Button.astro     # primary / outline / ghost × sm/md/lg
-│   │       ├── Card.astro       # polymorphic compound primitive
-│   │       ├── Section.astro    # numbered section wrapper
-│   │       └── Tag.astro         # default / accent / positive / negative / ghost
+│   │   ├── Footer.astro
+│   │   └── Seo.astro             # meta · JSON-LD · OG · Twitter
 │   │
 │   ├── data/                     # all content, typed
-│   │   ├── site.ts               # nav + social
+│   │   ├── site.ts               # nav items + social links + config
 │   │   ├── skills.ts             # 8 groups, 50+ items
 │   │   ├── experience.ts         # 5 roles
-│   │   ├── projects.ts           # 6 projects (featured + secondary)
-│   │   └── certifications.ts     # 2 AWS certs
+│   │   ├── projects.ts           # 6 projects
+│   │   └── certifications.ts     # 4 AWS certs
 │   │
 │   └── styles/
-│       └── global.css            # @theme tokens · @utility · base · components
+│       └── global.css            # @theme tokens · @utility · base · components · animations
 │
-├── astro.config.mjs              # Vite aliases · Tailwind plugin · build opts
+├── astro.config.mjs              # Vite aliases · Tailwind v4 plugin · build opts
 ├── tsconfig.json                 # strict · path aliases
+├── wrangler.toml                 # Cloudflare Workers config
 └── package.json
 ```
 
@@ -135,10 +133,11 @@ All copy lives in `src/data/`. Update the typed files; the UI re-renders.
 | `src/data/site.ts` | Email, GitHub, LinkedIn, location, nav items |
 | `src/data/skills.ts` | Skill groups and items |
 | `src/data/experience.ts` | Roles, periods, highlights, stack per job |
-| `src/data/projects.ts` | Projects (featured flag controls card vs row) |
+| `src/data/projects.ts` | Projects with featured flag |
 | `src/data/certifications.ts` | Certifications with issued/expires dates |
-| `src/components/Hero.astro` | Headline, tagline, CTA buttons, status panel |
-| `src/components/About.astro` | Bio paragraphs, operating principles, education |
+| `src/pages/index.astro` | Hero headline, tagline, featured projects |
+| `src/pages/about.astro` | Bio paragraphs, operating principles, certifications |
+| `src/pages/contact.astro` | Contact channels layout |
 | `public/og-image.svg` | Source for the social card (then regenerate PNG) |
 
 ### Regenerate OG image
@@ -162,19 +161,18 @@ convert -background "#08080a" public/favicon.svg -resize 512x512 -strip public/i
 Edit `SITE_URL` in:
 - `src/components/Seo.astro`
 - `src/pages/sitemap.xml.ts`
-- `astro.config.mjs` (`site` field)
+- `astro.config.mjs` (`site` field) — already set to `https://francastell.com`
 
 ## Deploy
 
 The build outputs a static site to `dist/`. Any static host works.
 
-### Cloudflare Pages
+### Cloudflare Workers
 
 ```bash
 npm run build
-# Framework preset: Astro
 # Build command: npm run build
-# Output directory: dist
+# Deploy command: npx wrangler deploy
 # Node version: 18+
 ```
 

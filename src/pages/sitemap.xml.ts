@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 
-const SITE_URL = 'https://francesccastell.dev';
+const SITE_URL = 'https://francastell.com';
 
 const routes = [
   { path: '/', lastmod: '2026-07-19', changefreq: 'monthly', priority: 1.0 },
