@@ -82,7 +82,6 @@ const { title, description, path = "/", ogType } = Astro.props;
     </script>
 
     <script>
-      // Scroll-triggered reveal animations (Apple-style)
       function initReveals() {
         const els = document.querySelectorAll("[data-reveal]");
         if (!els.length) return;
@@ -110,7 +109,13 @@ const { title, description, path = "/", ogType } = Astro.props;
           { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
         );
 
-        els.forEach((el) => io.observe(el));
+        els.forEach((el) => {
+          if (el.getBoundingClientRect().top < window.innerHeight) {
+            el.classList.add("is-visible");
+          } else {
+            io.observe(el);
+          }
+        });
       }
 
       initReveals();
@@ -149,7 +154,7 @@ const { title, description, path = "/", ogType } = Astro.props;
       @media (width < 48rem) {
         ::view-transition-old(root),
         ::view-transition-new(root) {
-          animation-duration: 0.01s;
+          animation: none;
         }
       }
     </style>
