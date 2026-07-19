@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 
-const SITE_URL = 'https://francesccastell.dev';
+const SITE_URL = 'https://francastell.com';
 
 export const GET: APIRoute = () => {
   const body = `User-agent: *

@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-
-# Block nothing — this is a personal portfolio, fully indexable.
-
-Sitemap: https://francesccastell.dev/sitemap.xml
