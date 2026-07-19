@@ -31,3 +31,6 @@ pnpm-debug.log*
 .claude/
 .opencode/
 skills-lock.json
+
+# lock file (deja que Cloudflare use npm install en vez de npm ci)
+package-lock.json
