@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="public/favicon.svg" width="64" height="64" alt="Francesc Castell logo" />
+<img src="public/logo.png" width="80" height="80" alt="Francesc Castell logo" />
 
 # Francesc Castell · Portfolio
 
