@@ -51,9 +51,11 @@ const { title, description, path = "/" } = Astro.props;
     <ClientRouter />
     <Seo title={title} description={description} path={path} />
 
-    <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/inter-tight-700.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/jbm-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-500.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-tight-500.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-tight-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/jbm-500.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body class="min-h-screen antialiased">
     <a
@@ -118,12 +120,14 @@ const { title, description, path = "/" } = Astro.props;
       [data-reveal] {
         opacity: 0;
         transform: translateY(24px);
+        will-change: transform, opacity;
         transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
           transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
       }
       [data-reveal].is-visible {
         opacity: 1;
         transform: translateY(0);
+        will-change: auto;
       }
 
       @media (prefers-reduced-motion: reduce) {

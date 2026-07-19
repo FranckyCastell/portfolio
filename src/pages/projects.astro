@@ -29,7 +29,7 @@ const rest = projects.filter((p) => !p.featured);
       {
         featured.map((p, i) => (
           <article
-            class="group relative flex flex-col rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-5 sm:p-7 transition-all duration-300 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-2)] hover:-translate-y-1"
+            class="group relative flex flex-col rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-5 sm:p-7 transition duration-300 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-2)] hover:-translate-y-1"
             data-reveal
             data-reveal-delay={String(i * 80)}
           >
