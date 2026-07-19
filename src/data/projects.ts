@@ -63,23 +63,6 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "cloudwatch-debian",
-    name: "CloudWatch Agent for Debian",
-    tagline: "SSM-driven, dynamic CloudWatch Agent on Debian EC2.",
-    description:
-      "Debian EC2 instances ship a CloudWatch Agent .deb that lacks a usable plaintext config, so the service never starts collecting system logs or metrics. This project ships two solutions: an SSM Document that installs, prepares the environment and generates a JSON config dynamically, plus a User Data variant that bakes the same flow into new instances from boot.",
-    year: "2024",
-    status: "shipped",
-    featured: true,
-    tags: ["AWS", "SSM", "CloudWatch", "Debian", "EC2", "Bash"],
-    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/CloudWatchAgent_Debian_Instances" }],
-    highlights: [
-      "SSM Run Command installs agent, prepares rsyslog, sets permissions, generates JSON config.",
-      "User Data variant bakes the same flow into new AMIs from boot.",
-      "Resolves the missing plaintext config gap on Debian specifically.",
-    ],
-  },
-  {
     slug: "llmops-private-rag",
     name: "Private LLMOps · Self-hosted RAG",
     tagline: "An on-premise RAG ecosystem with zero cloud dependency.",
