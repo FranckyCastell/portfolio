@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08080a"/>
+      <stop offset="1" stop-color="#16161a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#fbbf24"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#2a2a30" stroke-width="1"/>
+    </pattern>
+    <mask id="gridMask">
+      <radialGradient id="gridGrad" cx="50%" cy="0%" r="80%">
+        <stop offset="0" stop-color="white" stop-opacity="0.6"/>
+        <stop offset="1" stop-color="white" stop-opacity="0"/>
+      </radialGradient>
+      <rect width="1200" height="630" fill="url(#gridGrad)"/>
+    </mask>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)" mask="url(#gridMask)"/>
+
+  <!-- Accent vertical bar -->
+  <rect x="80" y="180" width="4" height="180" fill="url(#accent)"/>
+
+  <!-- Status badge -->
+  <g transform="translate(80, 80)">
+    <circle cx="6" cy="6" r="6" fill="#10b981"/>
+    <text x="22" y="11" font-family="JetBrains Mono, monospace" font-size="13" fill="#a1a1aa" letter-spacing="2">
+      AVAILABLE · BARCELONA · UTC+1
+    </text>
+  </g>
+
+  <!-- Name -->
+  <text x="80" y="280" font-family="Inter Tight, Inter, sans-serif" font-size="96" font-weight="700" fill="#f4f4f5" letter-spacing="-3">
+    Francesc Castell
+  </text>
+
+  <!-- Role -->
+  <text x="80" y="370" font-family="Inter, sans-serif" font-size="36" font-weight="500" fill="#d4d4d8">
+    <tspan fill="url(#accent)">DevOps Engineer</tspan>
+    <tspan fill="#a1a1aa">  ·  AWS  ·  Terraform  ·  LLMOps</tspan>
+  </text>
+
+  <!-- Tagline -->
+  <text x="80" y="440" font-family="Inter, sans-serif" font-size="22" fill="#71717a">
+    Automation, security &amp; scalable AWS infrastructure design.
+  </text>
+
+  <!-- Bottom tags -->
+  <g transform="translate(80, 510)" font-family="JetBrains Mono, monospace" font-size="14" fill="#a1a1aa">
+    <g>
+      <rect x="0" y="0" width="180" height="32" fill="#0f0f12" stroke="#2a2a30"/>
+      <text x="14" y="21">Bedrock AgentCore</text>
+    </g>
+    <g transform="translate(194, 0)">
+      <rect x="0" y="0" width="160" height="32" fill="#0f0f12" stroke="#2a2a30"/>
+      <text x="14" y="21">Terraform IaC</text>
+    </g>
+    <g transform="translate(368, 0)">
+      <rect x="0" y="0" width="120" height="32" fill="#0f0f12" stroke="#2a2a30"/>
+      <text x="14" y="21">LLMOps</text>
+    </g>
+    <g transform="translate(502, 0)">
+      <rect x="0" y="0" width="180" height="32" fill="#0f0f12" stroke="#2a2a30"/>
+      <text x="14" y="21">AWS multi-account</text>
+    </g>
+  </g>
+
+  <!-- Domain -->
+  <text x="1120" y="585" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="14" fill="#52525b" letter-spacing="1">
+    francesccastell.dev
+  </text>
+</svg>

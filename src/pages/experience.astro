@@ -1,0 +1,103 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import { experiences } from "@data/experience";
+
+const title = "Experience — Francesc Castell";
+const description =
+  "Five years across network administration, cloud services, and DevOps engineering. From municipalities to public sector AWS modernisation.";
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  path="/experience"
+  eyebrow="— EXPERIENCE"
+  heading="Five years, five roles."
+  lede="From administering networks for municipalities to modernising AWS infrastructure for Tier-1 public sector clients. A trajectory from systems to cloud to AI-infused operations."
+>
+  <div class="relative">
+    <div
+      class="absolute left-[7px] top-2 bottom-2 w-px bg-[var(--color-border)]"
+      aria-hidden="true"
+    >
+    </div>
+
+    <ol class="space-y-10">
+      {
+        experiences.map((job, i) => (
+          <li
+            class="relative pl-10"
+            data-reveal
+            data-reveal-delay={String(i * 80)}
+          >
+            <span
+              class={`absolute left-0 top-2 size-[15px] rounded-full border-2 transition-all duration-300 ${
+                job.current
+                  ? "border-[var(--color-accent)] bg-[var(--color-accent)] shadow-[0_0_0_4px_var(--color-accent-glow)]"
+                  : "border-[var(--color-border-strong)] bg-[var(--color-canvas)]"
+              }`}
+              aria-hidden="true"
+            />
+
+            <article>
+              <header class="mb-3 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-x-4">
+                <h2 class="text-lg md:text-2xl font-semibold text-[var(--color-ink)]">
+                  {job.role}
+                  <span class="text-[var(--color-ink-4)] font-normal"> · {job.company}</span>
+                </h2>
+                <div class="font-mono text-xs md:text-sm text-[var(--color-ink-4)] tabular-nums">
+                  {job.period}
+                </div>
+              </header>
+
+              <div class="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs md:text-sm text-[var(--color-ink-4)]">
+                <span>{job.location}</span>
+                {job.mode && (
+                  <>
+                    <span aria-hidden="true">·</span>
+                    <span>{job.mode}</span>
+                  </>
+                )}
+                <span aria-hidden="true">·</span>
+                <span class="tabular-nums">{job.duration}</span>
+                {job.current && (
+                  <>
+                    <span aria-hidden="true">·</span>
+                    <span class="text-[var(--color-positive)] inline-flex items-center gap-1.5">
+                      <span
+                        class="size-1.5 rounded-full bg-[var(--color-positive)]"
+                        style="animation: var(--animate-pulse-glow)"
+                      ></span>
+                      Current
+                    </span>
+                  </>
+                )}
+              </div>
+
+              <p class="mb-4 md:mb-6 max-w-2xl text-sm md:text-base text-[var(--color-ink-2)] leading-relaxed">
+                {job.summary}
+              </p>
+
+              <ul class="mb-4 md:mb-6 space-y-2 max-w-2xl">
+                {job.highlights.map((h) => (
+                  <li class="flex gap-2.5 text-sm md:text-base text-[var(--color-ink-3)] leading-relaxed">
+                    <span class="font-mono text-[var(--color-accent)] mt-0.5 flex-shrink-0">→</span>
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div class="flex flex-wrap gap-1.5">
+                {job.stack.map((tech) => (
+                  <span class="rounded-sm border border-[var(--color-border)] bg-[var(--color-surface-2)] px-2 py-0.5 font-mono text-xs uppercase tracking-wider text-[var(--color-ink-4)]">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</PageLayout>

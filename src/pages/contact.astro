@@ -1,0 +1,91 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import { social } from "@data/site";
+
+const title = "Contact — Francesc Castell";
+const description =
+  "Open to selected consulting engagements around AWS architecture, Terraform foundations, and AI-driven infrastructure operations. Based in Barcelona.";
+
+const channels = [
+  {
+    label: "Email",
+    value: social.email,
+    href: `mailto:${social.email}`,
+    hint: "Best for project enquiries",
+  },
+  {
+    label: "LinkedIn",
+    value: "/in/francesc-castell",
+    href: social.linkedin,
+    hint: "Best for professional context",
+  },
+  {
+    label: "GitHub",
+    value: "/FranckyCastell",
+    href: social.github,
+    hint: "Best for code and contributions",
+  },
+];
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  path="/contact"
+  eyebrow="— CONTACT"
+  heading="Let's build something."
+  lede="Currently open to selected consulting engagements around AWS architecture, Terraform foundations, and AI-driven infrastructure operations. Best fit: mid-market teams running multi-account AWS who want to ship faster without sacrificing security or compliance."
+>
+  <div class="space-y-10">
+    <div class="space-y-4">
+      {
+        channels.map((c, i) => (
+          <a
+            href={c.href}
+            target={c.href.startsWith("http") ? "_blank" : undefined}
+            rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
+            class="group flex flex-col gap-1 border-b border-[var(--color-border)] py-5 transition-colors duration-200 hover:border-[var(--color-accent)] sm:flex-row sm:items-baseline sm:justify-between sm:gap-4"
+            data-reveal
+            data-reveal-delay={String(i * 80)}
+          >
+            <div>
+              <div class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-ink-5)] mb-1.5">
+                {c.label}
+              </div>
+              <div class="text-lg sm:text-xl md:text-2xl text-[var(--color-ink)] transition-colors duration-200 group-hover:text-[var(--color-accent-2)] break-all">
+                {c.value}
+              </div>
+            </div>
+            <div class="text-left sm:text-right sm:flex-shrink-0">
+              <div class="text-sm text-[var(--color-ink-4)] mb-1.5">{c.hint}</div>
+              <span class="font-mono text-[var(--color-ink-4)] transition-colors group-hover:text-[var(--color-accent)]">↗</span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+
+    <section class="grid gap-6 md:grid-cols-2 pt-6 border-t border-[var(--color-border)]">
+      <div data-reveal>
+        <div class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-ink-5)] mb-3">
+          — Location
+        </div>
+        <div class="text-lg text-[var(--color-ink-2)]">{social.location}</div>
+        <div class="text-sm text-[var(--color-ink-4)] mt-1">UTC+1 · CET</div>
+      </div>
+      <div data-reveal data-reveal-delay="80">
+        <div class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-ink-5)] mb-3">
+          — Response
+        </div>
+        <div class="text-lg text-[var(--color-ink-2)]">Usually within 48h</div>
+        <div class="text-sm text-[var(--color-ink-4)] mt-1 flex items-center gap-2">
+          <span
+            class="size-1.5 rounded-full bg-[var(--color-positive)]"
+            style="animation: var(--animate-pulse-glow)"
+          ></span>
+          Available now
+        </div>
+      </div>
+    </section>
+  </div>
+</PageLayout>

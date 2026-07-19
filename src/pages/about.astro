@@ -1,0 +1,151 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import { certifications } from "@data/certifications";
+
+const title = "About — Francesc Castell";
+const description =
+  "DevOps engineer & cloud architect based in Barcelona. My background, principles, and what I'm capable of building.";
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  path="/about"
+  eyebrow="— ABOUT"
+  heading="I build infrastructure that disappears."
+  lede="DevOps engineer specialising in automation, security, and scalable AWS architecture. My work makes complex systems feel quiet — predictable, observable, and self-healing."
+>
+  <div class="space-y-10">
+    <section>
+      <div class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-ink-5)] mb-6">
+        — Background
+      </div>
+      <div class="space-y-5 text-base md:text-lg text-[var(--color-ink-2)] leading-relaxed max-w-2xl">
+        <p>
+          I'm a DevOps engineer and cloud architect based in Barcelona. My principle
+          is simple: <span class="text-[var(--color-ink)]">efficiency through
+          automation</span> — repetitive processes are opportunities for systematisation.
+        </p>
+        <p>
+          At <span class="text-[var(--color-ink)]">IThinkUPC</span>, I design and
+          operate mission-critical AWS infrastructures for public sector and enterprise
+          clients. Terraform enforces Infrastructure as Code; Centreon and Grafana give
+          us proactive observability; GitHub Actions ship safely with security scans
+          and automated rollouts.
+        </p>
+        <p>
+          Beyond operations, I'm deeply invested in the
+          <span class="text-[var(--color-accent)]">infrastructure layer of LLMOps</span>
+          — self-hosted RAG ecosystems with Proxmox, Ollama, and Qdrant, and the
+          integration of autonomous agents into infrastructure operations to create
+          systems that diagnose and heal themselves.
+        </p>
+      </div>
+    </section>
+
+    <section class="pt-6 border-t border-[var(--color-border)]">
+      <div class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-ink-5)] mb-6">
+        — Operating principles
+      </div>
+      <div class="grid gap-6 md:grid-cols-2 md:gap-8">
+        {
+          [
+            {
+              n: "01",
+              title: "Automate the boring path",
+              body: "If you run it twice, script it. If three times, ship it as a tool. Homer, my Terraform CLI, started as a 3-line alias and grew into a 400+ line internal tool.",
+            },
+            {
+              n: "02",
+              title: "Infrastructure as Code, always",
+              body: "No console clicks in production. Terraform codebases are modular, version-controlled, and reproducible across environments — pre, pro, anywhere.",
+            },
+            {
+              n: "03",
+              title: "Security as a design constraint",
+              body: "Not a bolt-on. ENS compliance, least-privilege IAM, audit trails by default. I hold the AWS Certified Security – Specialty credential.",
+            },
+            {
+              n: "04",
+              title: "Observability before features",
+              body: "If you can't see it, you can't fix it. End-to-end monitoring with Centreon, Grafana, and CloudWatch — real-time visibility into health and business metrics.",
+            },
+          ].map((p) => (
+            <div class="space-y-2.5">
+              <div class="font-mono text-xs text-[var(--color-accent)]">{p.n}</div>
+              <h3 class="text-lg md:text-xl font-semibold text-[var(--color-ink)]">{p.title}</h3>
+              <p class="text-sm md:text-base text-[var(--color-ink-3)] leading-relaxed">{p.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="pt-6 border-t border-[var(--color-border)]">
+      <div class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-ink-5)] mb-6">
+        — Certifications
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        {
+          certifications.map((cert) => (
+            <div class="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-5 md:p-6 transition-colors duration-200 hover:border-[var(--color-border-strong)]">
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <div class="font-mono text-xs text-[var(--color-accent)]">{cert.code}</div>
+                {cert.status === "in-progress" ? (
+                  <span class="font-mono text-xs uppercase tracking-wider text-[var(--color-accent)]">
+                    In progress
+                  </span>
+                ) : (
+                  <span class="font-mono text-xs uppercase tracking-wider text-[var(--color-positive)]">
+                    Active
+                  </span>
+                )}
+              </div>
+              <h3 class="text-lg font-semibold text-[var(--color-ink)] mb-1">{cert.name}</h3>
+              <div class="text-sm text-[var(--color-ink-3)]">{cert.issuer}</div>
+              <div class="mt-4 flex items-center gap-2 font-mono text-xs text-[var(--color-ink-5)]">
+                {cert.status === "in-progress" ? (
+                  <>
+                    <span
+                      class="size-1.5 rounded-full bg-[var(--color-accent)]"
+                      style="animation: var(--animate-pulse-glow)"
+                    />
+                    <span>Currently studying</span>
+                  </>
+                ) : (
+                  <>
+                    <span class="size-1.5 rounded-full bg-[var(--color-positive)]"></span>
+                    <span>Valid through {cert.expires}</span>
+                  </>
+                )}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="pt-6 border-t border-[var(--color-border)]">
+      <div class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-ink-5)] mb-6">
+        — Education & languages
+      </div>
+      <div class="grid gap-8 md:grid-cols-2">
+        <div class="space-y-4">
+          <div>
+            <div class="text-[var(--color-ink)]">Salesians Sarrià</div>
+            <div class="text-sm text-[var(--color-ink-3)]">CFGS · Renewable Energies · 2022–2024</div>
+          </div>
+          <div>
+            <div class="text-[var(--color-ink)]">IES Emili Darder</div>
+            <div class="text-sm text-[var(--color-ink-3)]">CFGS · Network Systems Admin · 2019–2021</div>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="rounded-sm border border-[var(--color-border)] bg-[var(--color-surface-2)] px-3 py-1.5 text-sm text-[var(--color-ink-2)]">Català</span>
+          <span class="rounded-sm border border-[var(--color-border)] bg-[var(--color-surface-2)] px-3 py-1.5 text-sm text-[var(--color-ink-2)]">Español</span>
+          <span class="rounded-sm border border-[var(--color-border)] bg-[var(--color-surface-2)] px-3 py-1.5 text-sm text-[var(--color-ink-2)]">English</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</PageLayout>

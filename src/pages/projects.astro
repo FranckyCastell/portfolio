@@ -1,0 +1,141 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import { projects } from "@data/projects";
+
+const title = "Projects — Francesc Castell";
+const description =
+  "Selected projects: Homer CLI, Terraform workflows, CloudWatch Agent for Debian, self-hosted LLMOps RAG, and AWS cloud-native architectures.";
+
+const statusMap = {
+  shipped: { label: "Shipped", color: "text-[var(--color-positive)]" },
+  active: { label: "Active", color: "text-[var(--color-accent)]" },
+  exploration: { label: "Exploration", color: "text-[var(--color-ink-4)]" },
+};
+
+const featured = projects.filter((p) => p.featured);
+const rest = projects.filter((p) => !p.featured);
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  path="/projects"
+  eyebrow="— PROJECTS"
+  heading="Tools and systems I've built."
+  lede="From internal CLIs that save hours every week to self-hosted AI infrastructure. Each project started as a real frustration I wanted to make disappear."
+>
+  <div class="space-y-10">
+    <div class="grid gap-5 md:grid-cols-2">
+      {
+        featured.map((p, i) => (
+          <article
+            class="group relative flex flex-col rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-5 sm:p-7 transition-all duration-300 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-2)] hover:-translate-y-1"
+            data-reveal
+            data-reveal-delay={String(i * 80)}
+          >
+            <div class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-[var(--color-accent)] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-50" aria-hidden="true" />
+
+            <div class="mb-5 flex items-start justify-between gap-4">
+              <div>
+                <div class="flex items-baseline gap-3 mb-2">
+                  <span class="font-mono text-sm text-[var(--color-accent)]">{`0${i + 1}`}</span>
+                  <span class={`font-mono text-xs uppercase tracking-wider ${statusMap[p.status].color}`}>
+                    {statusMap[p.status].label}
+                  </span>
+                </div>
+                <h2 class="text-2xl font-semibold text-[var(--color-ink)] transition-colors duration-200 group-hover:text-[var(--color-accent-2)]">
+                  {p.name}
+                </h2>
+                <p class="mt-1.5 text-base text-[var(--color-ink-3)]">{p.tagline}</p>
+              </div>
+              <div class="font-mono text-sm text-[var(--color-ink-5)] tabular-nums whitespace-nowrap">
+                {p.year}
+              </div>
+            </div>
+
+            <p class="mb-5 text-base text-[var(--color-ink-2)] leading-relaxed">
+              {p.description}
+            </p>
+
+            {p.highlights && p.highlights.length > 0 && (
+              <ul class="mb-5 space-y-2">
+                {p.highlights.map((h) => (
+                  <li class="flex gap-2.5 text-sm text-[var(--color-ink-3)] leading-relaxed">
+                    <span class="font-mono text-[var(--color-accent)] mt-0.5 flex-shrink-0">→</span>
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            <div class="mt-auto flex items-center justify-between gap-4 pt-2">
+              <div class="flex flex-wrap gap-1.5">
+                {p.tags.map((tag) => (
+                  <span class="rounded-sm border border-[var(--color-border)] bg-[var(--color-surface-2)] px-1.5 py-0.5 font-mono text-xs uppercase tracking-wider text-[var(--color-ink-4)]">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              {p.links && p.links.length > 0 && (
+                <div class="flex items-center gap-3 flex-shrink-0">
+                  {p.links.map((link) => (
+                    <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="font-mono text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-accent)]"
+                    >
+                      {link.label} ↗
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    {
+      rest.length > 0 && (
+        <div>
+          <div class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-ink-5)] mb-6" data-reveal>
+            — Also built
+          </div>
+          <div class="divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
+            {rest.map((p, i) => (
+              <article
+                class="group grid gap-1 py-4 md:grid-cols-[1fr_2fr_auto] md:items-baseline md:gap-8 transition-colors duration-200 hover:bg-[var(--color-surface)] md:px-3 md:-mx-3 md:rounded-sm"
+                data-reveal
+                data-reveal-delay={String(i * 60)}
+              >
+                <div class="flex items-baseline gap-3">
+                  <h3 class="text-base md:text-lg font-medium text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-accent-2)]">
+                    {p.name}
+                  </h3>
+                  <span class={`font-mono text-xs uppercase tracking-wider ${statusMap[p.status].color}`}>
+                    {statusMap[p.status].label}
+                  </span>
+                </div>
+                <p class="text-sm md:text-base text-[var(--color-ink-3)] leading-relaxed">{p.tagline}</p>
+                <div class="flex items-center gap-4">
+                  <span class="font-mono text-xs text-[var(--color-ink-5)] tabular-nums">{p.year}</span>
+                  {p.links?.map((link) => (
+                    <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="font-mono text-sm text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-accent)]"
+                    >
+                      {link.label} ↗
+                    </a>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      )
+    }
+  </div>
+</PageLayout>

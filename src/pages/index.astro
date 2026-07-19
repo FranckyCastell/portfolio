@@ -1,0 +1,203 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { social } from "@data/site";
+import { projects } from "@data/projects";
+import { experiences } from "@data/experience";
+
+const title = "Francesc Castell · AWS DevOps Engineer & LLMOps Consultant";
+const description =
+  "DevOps engineer & cloud architect in Barcelona. Specialised in AWS, Terraform, and LLMOps. Open to consulting engagements on AI-driven infrastructure operations.";
+
+const featured = projects.filter((p) => p.featured).slice(0, 3);
+const currentRole = experiences[0];
+---
+
+<BaseLayout title={title} description={description} path="/">
+  <section class="relative min-h-[92svh] flex items-center overflow-hidden">
+    <div class="absolute inset-0 grid-pattern opacity-30" aria-hidden="true"></div>
+    <div class="noise" aria-hidden="true"></div>
+
+    <div class="container-prose relative py-20 sm:py-24">
+      <div
+        class="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-ink-4)] mb-10"
+        data-reveal
+      >
+        <span
+          class="size-1.5 rounded-full bg-[var(--color-positive)]"
+          style="animation: var(--animate-pulse-glow)"
+        ></span>
+        <span>AVAILABLE · {social.location}</span>
+      </div>
+
+      <h1
+        class="font-display text-[clamp(2.5rem,11vw,7.5rem)] font-semibold leading-[0.95] tracking-[-0.03em] text-[var(--color-ink)]"
+        data-reveal
+        data-reveal-delay="80"
+      >
+        Francesc<br />
+        <span class="text-gradient-accent">Castell</span>
+      </h1>
+
+      <p
+        class="mt-6 max-w-2xl text-lg md:text-2xl text-[var(--color-ink-2)] leading-[1.4] font-light"
+        data-reveal
+        data-reveal-delay="160"
+      >
+        DevOps engineer &amp; cloud architect.
+        I design <span class="text-[var(--color-ink)]">secure, automated AWS
+        infrastructure</span> and explore the infrastructure layer of
+        <span class="text-[var(--color-accent)]">LLMOps</span> — building
+        intelligent, self-heeling systems.
+      </p>
+
+      <div
+        class="mt-10 flex flex-wrap items-center gap-3"
+        data-reveal
+        data-reveal-delay="240"
+      >
+        <a
+          href="/projects"
+          class="inline-flex items-center gap-2 rounded-sm bg-[var(--color-ink)] px-6 py-3 text-sm font-semibold text-[var(--color-canvas)] transition-all duration-200 hover:bg-[var(--color-accent)] hover:shadow-[var(--shadow-glow)]"
+        >
+          See selected projects
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </a>
+        <a
+          href="/about"
+          class="inline-flex items-center gap-2 rounded-sm border border-[var(--color-border-strong)] bg-[var(--color-surface-2)] px-6 py-3 text-sm font-semibold text-[var(--color-ink)] transition-colors duration-200 hover:border-[var(--color-accent)]"
+        >
+          About me
+        </a>
+      </div>
+    </div>
+
+    <div
+      class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[var(--color-ink-5)]"
+      data-reveal
+      data-reveal-delay="400"
+    >
+      <span class="font-mono text-xs uppercase tracking-[0.2em]">Scroll</span>
+      <span class="block h-10 w-px bg-gradient-to-b from-[var(--color-ink-5)] to-transparent"></span>
+    </div>
+  </section>
+
+  <section class="py-12 md:py-20">
+    <div class="container-prose">
+      <div
+        class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-ink-5)] mb-8"
+        data-reveal
+      >
+        — CURRENTLY
+      </div>
+      <div
+        class="grid gap-8 md:grid-cols-[1fr_1fr] md:gap-12"
+      >
+        <div data-reveal data-reveal-delay="80">
+          <div class="text-sm text-[var(--color-ink-4)] mb-2">{currentRole.period}</div>
+          <h2 class="font-display text-2xl md:text-3xl font-semibold leading-tight text-[var(--color-ink)] mb-4">
+            {currentRole.role}
+            <span class="text-[var(--color-ink-4)] font-normal"> · {currentRole.company}</span>
+          </h2>
+          <p class="text-base text-[var(--color-ink-3)] leading-relaxed">
+            {currentRole.summary}
+          </p>
+        </div>
+        <div class="space-y-3" data-reveal data-reveal-delay="160">
+          {
+            currentRole.highlights.slice(0, 4).map((h) => (
+              <div class="flex gap-3 text-sm text-[var(--color-ink-3)] leading-relaxed">
+                <span class="font-mono text-[var(--color-accent)] flex-shrink-0 mt-1">→</span>
+                <span>{h}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 md:py-20 border-t border-[var(--color-border)]">
+    <div class="container-wide">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2
+          class="font-display text-2xl md:text-3xl font-semibold text-[var(--color-ink)]"
+          data-reveal
+        >
+          Selected projects
+        </h2>
+        <a
+          href="/projects"
+          class="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-ink-3)] transition-colors hover:text-[var(--color-accent)]"
+          data-reveal
+          data-reveal-delay="80"
+        >
+          View all →
+        </a>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        {
+          featured.map((p, i) => (
+            <a
+              href="/projects"
+              class="group relative overflow-hidden rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition-all duration-300 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-2)] hover:-translate-y-0.5"
+              data-reveal
+              data-reveal-delay={String(i * 80)}
+            >
+              <div class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-[var(--color-accent)] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-50" aria-hidden="true" />
+              <div class="flex items-baseline justify-between mb-4">
+                <span class="font-mono text-xs text-[var(--color-accent)]">{`0${i + 1}`}</span>
+                <span class="font-mono text-xs text-[var(--color-ink-5)]">{p.year}</span>
+              </div>
+              <h3 class="text-lg font-semibold text-[var(--color-ink)] transition-colors duration-200 group-hover:text-[var(--color-accent-2)] mb-2">
+                {p.name}
+              </h3>
+              <p class="text-sm text-[var(--color-ink-3)] leading-relaxed mb-5">
+                {p.tagline}
+              </p>
+              <div class="flex flex-wrap gap-1.5">
+                {p.tags.slice(0, 3).map((t) => (
+                  <span class="font-mono text-xs text-[var(--color-ink-5)]">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 md:py-20 border-t border-[var(--color-border)]">
+    <div class="container-prose text-center">
+      <h2
+        class="font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-tight tracking-tight text-[var(--color-ink)] mb-5"
+        data-reveal
+      >
+        Let's build something.
+      </h2>
+      <p
+        class="max-w-xl mx-auto text-base text-[var(--color-ink-3)] leading-relaxed mb-8"
+        data-reveal
+        data-reveal-delay="80"
+      >
+        Open to selected consulting engagements around AWS architecture, Terraform
+        foundations, and AI-driven infrastructure operations.
+      </p>
+      <a
+        href="/contact"
+        class="inline-flex items-center gap-2 rounded-sm bg-[var(--color-accent)] px-6 py-3 text-sm font-semibold text-[var(--color-canvas)] transition-all duration-200 hover:bg-[var(--color-accent-2)] hover:shadow-[var(--shadow-glow)]"
+        data-reveal
+        data-reveal-delay="160"
+      >
+        Start a conversation
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

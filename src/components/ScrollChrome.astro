@@ -1,0 +1,71 @@
+---
+---
+
+<div
+  id="scroll-progress"
+  class="fixed top-0 left-0 z-[60] h-px bg-[var(--color-accent)] transition-[width] duration-150 ease-out"
+  style="width:0%"
+  aria-hidden="true"
+>
+</div>
+
+<button
+  id="back-to-top"
+  type="button"
+  aria-label="Back to top"
+  class="invisible fixed bottom-6 right-6 z-[60] flex size-10 items-center justify-center rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] text-[var(--color-ink-2)] opacity-0 shadow-[var(--shadow-md)] transition-all duration-200 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:outline-2 focus-visible:outline-[var(--color-ring)] focus-visible:outline-offset-2 data-[visible=true]:visible data-[visible=true]:opacity-100"
+  data-visible="false"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M12 19V5M5 12l7-7 7 7"></path>
+  </svg>
+</button>
+
+<script is:inline>
+  (function () {
+    const progress = document.getElementById("scroll-progress");
+    const backToTop = document.getElementById("back-to-top");
+    if (!progress || !backToTop) return;
+
+    let ticking = false;
+    function update() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progress.style.width = `${Math.min(pct, 100)}%`;
+
+      const show = scrollTop > 600;
+      backToTop.dataset.visible = String(show);
+
+      ticking = false;
+    }
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    update();
+  })();
+</script>

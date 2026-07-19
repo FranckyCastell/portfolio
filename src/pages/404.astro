@@ -1,0 +1,67 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { social } from "@data/site";
+
+const title = "404 — Page not found · Francesc Castell";
+const description = "This page doesn't exist. But the rest of the site is still up.";
+---
+
+<BaseLayout title={title} description={description} path="/404">
+  <section class="relative min-h-[80svh] flex items-center overflow-hidden">
+    <div class="absolute inset-0 grid-pattern opacity-20" aria-hidden="true"></div>
+
+    <div class="container-prose relative py-24">
+      <div
+        class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-ink-5)] mb-8"
+        data-reveal
+      >
+        — ERROR 404
+      </div>
+
+      <h1
+        class="font-display text-[clamp(2.5rem,9vw,6rem)] font-semibold leading-[0.95] tracking-[-0.03em] text-[var(--color-ink)]"
+        data-reveal
+        data-reveal-delay="80"
+      >
+        This page<br />
+        <span class="text-gradient-accent">doesn't exist.</span>
+      </h1>
+
+      <p
+        class="mt-8 max-w-xl text-lg md:text-xl text-[var(--color-ink-3)] leading-[1.4] font-light"
+        data-reveal
+        data-reveal-delay="160"
+      >
+        But I do — and so does the rest of the site.
+      </p>
+
+      <div
+        class="mt-12 flex flex-wrap items-center gap-3"
+        data-reveal
+        data-reveal-delay="240"
+      >
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 rounded-sm bg-[var(--color-ink)] px-6 py-3 text-sm font-semibold text-[var(--color-canvas)] transition-all duration-200 hover:bg-[var(--color-accent)] hover:shadow-[var(--shadow-glow)]"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M19 12H5M12 19l-7-7 7-7"></path>
+          </svg>
+          Go home
+        </a>
+        <a
+          href="/projects"
+          class="inline-flex items-center gap-2 rounded-sm border border-[var(--color-border-strong)] bg-[var(--color-surface-2)] px-6 py-3 text-sm font-semibold text-[var(--color-ink)] transition-colors duration-200 hover:border-[var(--color-accent)]"
+        >
+          See my projects
+        </a>
+        <a
+          href="/contact"
+          class="inline-flex items-center gap-2 rounded-sm border border-[var(--color-border-strong)] bg-[var(--color-surface-2)] px-6 py-3 text-sm font-semibold text-[var(--color-ink)] transition-colors duration-200 hover:border-[var(--color-accent)]"
+        >
+          Get in touch
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

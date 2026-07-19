@@ -1,0 +1,143 @@
+---
+import "@styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import Nav from "@components/Nav.astro";
+import Footer from "@components/Footer.astro";
+import MobileMenu from "@components/MobileMenu.astro";
+import ScrollChrome from "@components/ScrollChrome.astro";
+import Seo from "@components/Seo.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+}
+
+const { title, description, path = "/" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#08080a" media="(prefers-color-scheme: dark)" />
+
+    <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicon-64.png" sizes="64x64" />
+    <link rel="icon" type="image/png" href="/favicon-256.png" sizes="256x256" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Anti-FOUC: set theme class before first paint + re-apply after View Transitions swap -->
+    <script is:inline>
+      (function applyTheme() {
+        const stored = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const isDark = stored ? stored === "dark" : prefersDark;
+        document.documentElement.classList.toggle("dark", isDark);
+      })();
+
+      document.addEventListener("astro:after-swap", function () {
+        const stored = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const isDark = stored ? stored === "dark" : prefersDark;
+        document.documentElement.classList.toggle("dark", isDark);
+      });
+    </script>
+
+    <ClientRouter />
+    <Seo title={title} description={description} path={path} />
+
+    <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-tight-700.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/jbm-400.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body class="min-h-screen antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:z-[100] focus:top-4 focus:left-4 focus:rounded-sm focus:bg-[var(--color-surface-3)] focus:px-4 focus:py-2 focus:text-[var(--color-ink)]"
+    >
+      Skip to content
+    </a>
+
+    <ScrollChrome />
+    <Nav />
+    <MobileMenu />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <script is:inline>
+      const year = document.querySelector("[data-year]");
+      if (year) year.textContent = String(new Date().getFullYear());
+    </script>
+
+    <script>
+      // Scroll-triggered reveal animations (Apple-style)
+      function initReveals() {
+        const els = document.querySelectorAll("[data-reveal]");
+        if (!els.length) return;
+
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          els.forEach((el) => {
+            (el as HTMLElement).style.opacity = "1";
+            (el as HTMLElement).style.transform = "none";
+          });
+          return;
+        }
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const el = entry.target as HTMLElement;
+                const delay = el.dataset.revealDelay || "0";
+                el.style.transitionDelay = `${delay}ms`;
+                el.classList.add("is-visible");
+                io.unobserve(el);
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
+        );
+
+        els.forEach((el) => io.observe(el));
+      }
+
+      initReveals();
+      document.addEventListener("astro:after-swap", initReveals);
+    </script>
+
+    <style is:global>
+      [data-reveal] {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      [data-reveal].is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        [data-reveal] {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      }
+
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation-duration: 0.4s;
+        animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,147 @@
+---
+import { social } from "@data/site";
+
+export interface SeoProps {
+  title: string;
+  description: string;
+  path?: string;
+  image?: string;
+  type?: "website" | "profile";
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  path = "/",
+  image = "/og-image.png",
+  type = "website",
+  noindex = false,
+} = Astro.props;
+
+const SITE_URL = "https://francesccastell.dev";
+const canonical = `${SITE_URL}${path === "/" ? "" : path}`;
+const imageUrl = image.startsWith("http") ? image : `${SITE_URL}${image}`;
+
+// JSON-LD: Person schema (E-E-A-T — Experience, Expertise, Authoritativeness, Trust)
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Francesc Castell",
+  jobTitle: "DevOps Engineer & Cloud Architect",
+  url: SITE_URL,
+  image: `${SITE_URL}/og-image.png`,
+  email: `mailto:${social.email}`,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Barcelona",
+    addressRegion: "Catalonia",
+    addressCountry: "ES",
+  },
+  nationality: "Spanish",
+  knowsLanguage: ["ca", "es", "en"],
+  sameAs: [social.linkedin, social.github],
+  knowsAbout: [
+    "Amazon Web Services",
+    "Terraform",
+    "DevOps",
+    "Infrastructure as Code",
+    "LLMOps",
+    "CI/CD",
+    "Cloud Architecture",
+    "Observability",
+    "Amazon Bedrock",
+    "Kubernetes",
+  ],
+  worksFor: {
+    "@type": "Organization",
+    name: "IThinkUPC",
+  },
+  alumniOf: [
+    {
+      "@type": "EducationalOrganization",
+      name: "Salesians Sarrià",
+    },
+    {
+      "@type": "EducationalOrganization",
+      name: "IES Emili Darder",
+    },
+  ],
+  hasCredential: [
+    {
+      "@type": "EducationalOccupationalCredential",
+      name: "AWS Certified Security - Specialty",
+      recognizedBy: {
+        "@type": "Organization",
+        name: "Amazon Web Services",
+      },
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      name: "AWS Certified Solutions Architect - Associate",
+      recognizedBy: {
+        "@type": "Organization",
+        name: "Amazon Web Services",
+      },
+    },
+  ],
+};
+
+// JSON-LD: WebSite schema (helps with sitelinks search box etc.)
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Francesc Castell — Portfolio",
+  url: SITE_URL,
+  author: {
+    "@type": "Person",
+    name: "Francesc Castell",
+  },
+  inLanguage: "en",
+  publisher: {
+    "@type": "Person",
+    name: "Francesc Castell",
+  },
+};
+---
+
+<!-- Primary Meta -->
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+{!noindex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
+
+<!-- Author & keywords -->
+<meta name="author" content="Francesc Castell" />
+<meta
+  name="keywords"
+  content="DevOps Engineer, AWS, Terraform, LLMOps, Cloud Architect, Barcelona, Infrastructure as Code, Bedrock AgentCore, Automation, CI/CD, Observability, AWS Certified"
+/>
+
+<!-- Open Graph -->
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:alt" content={`${title} — portfolio cover`} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="Francesc Castell" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:locale:alternate" content="es_ES" />
+<meta property="og:locale:alternate" content="ca_ES" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={`${title} — portfolio cover`} />
+<meta name="twitter:site" content="@francesccastell" />
+<meta name="twitter:creator" content="@francesccastell" />
+
+<!-- Structured data -->
+<script type="application/ld+json" is:inline set:html={JSON.stringify(personSchema)} />
+<script type="application/ld+json" is:inline set:html={JSON.stringify(websiteSchema)} />

@@ -1,0 +1,189 @@
+---
+import { navItems } from "@data/site";
+import { social } from "@data/site";
+const pathname = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? pathname === "/" : pathname.startsWith(href);
+---
+
+<div
+  id="mobile-menu"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Navigation menu"
+  class="invisible fixed inset-0 z-[90] bg-[var(--color-canvas)] opacity-0 transition-opacity duration-300 data-[open=true]:visible data-[open=true]:opacity-100 sm:hidden"
+  data-open="false"
+>
+  <!-- Panel content -->
+  <div
+    class="mobile-menu-panel absolute inset-0 flex flex-col px-6 pt-24 pb-8"
+    data-close
+  >
+    <!-- Close button (top-right) -->
+    <button
+      type="button"
+      data-close
+      aria-label="Close menu"
+      class="absolute right-5 top-5 flex size-9 items-center justify-center rounded-sm border border-[var(--color-border)] bg-[var(--color-surface-2)] text-[var(--color-ink-3)] transition-colors duration-200 hover:border-[var(--color-border-strong)] hover:text-[var(--color-ink)]"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <!-- Nav links -->
+    <nav class="flex-1 flex flex-col justify-center gap-1" aria-label="Mobile">
+      {
+        navItems.map((item, i) => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? "page" : undefined}
+            class="mobile-menu-item group flex items-baseline gap-4 border-b border-[var(--color-border)] py-5 text-3xl font-display font-semibold tracking-tight transition-colors duration-200"
+            style={`--item-index: ${i}`}
+          >
+            <span
+              class={`font-mono text-sm font-normal tabular-nums ${
+                isActive(item.href) ? "text-[var(--color-accent)]" : "text-[var(--color-ink-5)]"
+              }`}
+            >
+              0{i + 1}
+            </span>
+            <span
+              class={`transition-colors duration-200 ${
+                isActive(item.href)
+                  ? "text-[var(--color-ink)]"
+                  : "text-[var(--color-ink-3)] group-hover:text-[var(--color-ink)]"
+              }`}
+            >
+              {item.label}
+            </span>
+            {isActive(item.href) && (
+              <span
+                class="ml-auto size-1.5 rounded-full bg-[var(--color-accent)]"
+                aria-hidden="true"
+              />
+            )}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- Footer info -->
+    <div class="mt-auto space-y-4 pt-8">
+      <div class="flex items-center gap-2 font-mono text-xs text-[var(--color-ink-4)]">
+        <span
+          class="size-1.5 rounded-full bg-[var(--color-positive)]"
+          style="animation: var(--animate-pulse-glow)"
+        ></span>
+        <span>AVAILABLE · {social.location.toUpperCase()}</span>
+      </div>
+      <div class="flex items-center gap-4 text-sm text-[var(--color-ink-4)]">
+        <a href={social.github} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-[var(--color-accent)]">
+          GitHub ↗
+        </a>
+        <a href={social.linkedin} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-[var(--color-accent)]">
+          LinkedIn ↗
+        </a>
+        <a href={`mailto:${social.email}`} class="transition-colors hover:text-[var(--color-accent)]">
+          Email ↗
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .mobile-menu-panel {
+    transform: translateY(-12px);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #mobile-menu[data-open="true"] .mobile-menu-panel {
+    transform: translateY(0);
+  }
+
+  .mobile-menu-item {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease,
+      border-color 0.2s ease;
+    transition-delay: calc(var(--item-index) * 60ms + 100ms);
+  }
+  #mobile-menu[data-open="true"] .mobile-menu-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-menu-panel,
+    .mobile-menu-item {
+      transition: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+      transition-delay: 0ms !important;
+    }
+  }
+</style>
+
+<script>
+  function bindMobileMenu() {
+    const button = document.getElementById("mobile-menu-button");
+    const menu = document.getElementById("mobile-menu");
+    if (!button || !menu) return;
+
+    const iconOpen = button.querySelector(".menu-icon-open");
+    const iconClose = button.querySelector(".menu-icon-close");
+
+    function setOpen(open: boolean) {
+      if (!menu || !button) return;
+      menu.dataset.open = String(open);
+      button.setAttribute("aria-expanded", String(open));
+      button.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      iconOpen?.classList.toggle("hidden", open);
+      iconClose?.classList.toggle("hidden", !open);
+      document.body.style.overflow = open ? "hidden" : "";
+    }
+
+    button.addEventListener("click", () => {
+      const isOpen = menu.dataset.open === "true";
+      setOpen(!isOpen);
+    });
+
+    menu.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+      if (target.closest("[data-close]") || target.closest("a")) {
+        setOpen(false);
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+      if (menu.dataset.open !== "true") return;
+      if (!menu.contains(target) && !button.contains(target)) {
+        setOpen(false);
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && menu.dataset.open === "true") {
+        setOpen(false);
+        button.focus();
+      }
+    });
+  }
+
+  bindMobileMenu();
+  document.addEventListener("astro:after-swap", bindMobileMenu);
+</script>

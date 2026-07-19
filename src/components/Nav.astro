@@ -1,0 +1,107 @@
+---
+import { navItems } from "@data/site";
+import ThemeToggle from "@components/ThemeToggle.astro";
+const pathname = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? pathname === "/" : pathname.startsWith(href);
+---
+
+<header
+  class="fixed top-0 left-0 right-0 z-50 border-b border-[color-mix(in_oklab,var(--color-border)_60%,transparent)] bg-[color-mix(in_oklab,var(--color-canvas)_72%,transparent)] backdrop-blur-xl"
+>
+  <div class="container-wide flex h-16 items-center justify-between gap-4 sm:gap-6">
+    <a
+      href="/"
+      class="group flex items-center gap-2.5 font-mono text-xs tracking-[0.18em] text-[var(--color-ink-2)] transition-colors duration-200 hover:text-[var(--color-ink)]"
+      aria-label="Home"
+    >
+      <img
+        src="/logo-nav.png"
+        alt="Francesc Castell"
+        width="32"
+        height="32"
+        class="hidden size-8 rounded-sm invert dark:invert-0 transition-all duration-300 group-hover:shadow-[var(--shadow-glow)] sm:block"
+      />
+      <span>FRANCESC&nbsp;CASTELL</span>
+    </a>
+
+    <nav class="hidden sm:flex items-center gap-0.5" aria-label="Primary">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? "page" : undefined}
+            class={`relative px-3 py-1.5 text-sm font-medium transition-colors duration-200 sm:px-4 ${
+              isActive(item.href)
+                ? "text-[var(--color-ink)]"
+                : "text-[var(--color-ink-3)] hover:text-[var(--color-ink)]"
+            }`}
+          >
+            {item.label}
+            {isActive(item.href) && (
+              <span
+                class="absolute -bottom-px left-3 right-3 h-px bg-[var(--color-accent)] sm:left-4 sm:right-4"
+                aria-hidden="true"
+              />
+            )}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-2 sm:gap-2.5">
+      <ThemeToggle />
+      <span
+        class="hidden xl:flex items-center gap-2 font-mono text-xs text-[var(--color-ink-4)]"
+      >
+        <span
+          class="size-1.5 rounded-full bg-[var(--color-positive)]"
+          style="animation: var(--animate-pulse-glow)"
+        ></span>
+        <span>AVAILABLE</span>
+      </span>
+      <button
+        type="button"
+        id="mobile-menu-button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        class="flex size-9 items-center justify-center rounded-sm border border-[var(--color-border)] bg-[var(--color-surface-2)] text-[var(--color-ink-3)] transition-colors duration-200 hover:border-[var(--color-border-strong)] hover:text-[var(--color-ink)] focus-visible:outline-2 focus-visible:outline-[var(--color-ring)] focus-visible:outline-offset-2 sm:hidden"
+      >
+        <svg
+          class="menu-icon-open"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <svg
+          class="menu-icon-close hidden"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>

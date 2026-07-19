@@ -1,0 +1,81 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import { skillGroups } from "@data/skills";
+
+const title = "Stack — Francesc Castell";
+const description =
+  "The tools I use daily: AWS, Terraform, Packer, GitHub Actions, Grafana, Centreon, Bedrock AgentCore, Ollama, Qdrant, Python, TypeScript.";
+
+// Split: AWS + LLMOps get featured treatment, rest go in grid
+const featured = skillGroups.filter((g) =>
+  ["Cloud · AWS", "LLMOps · AI"].includes(g.category)
+);
+const rest = skillGroups.filter(
+  (g) => !["Cloud · AWS", "LLMOps · AI"].includes(g.category)
+);
+---
+
+<PageLayout
+  title={title}
+  description={description}
+  path="/stack"
+  eyebrow="— STACK"
+  heading="Tools I reach for."
+  lede="The technology I use to design, ship, and operate infrastructure. I prefer fewer tools used well over many tools used poorly."
+>
+  <div class="space-y-8">
+    {/* Featured: AWS + LLMOps as wide cards */}
+    <div class="grid gap-4 md:grid-cols-2">
+      {
+        featured.map((group, i) => (
+          <section
+            class="group rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition-colors duration-200 hover:border-[var(--color-border-strong)]"
+            data-reveal
+            data-reveal-delay={String(i * 60)}
+          >
+            <div class="mb-5 flex items-center gap-3">
+              <span class="font-mono text-xs text-[var(--color-accent)]">{group.index}</span>
+              <h2 class="text-lg font-semibold text-[var(--color-ink)]">{group.category}</h2>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              {group.items.map((item) => (
+                <span
+                  class="rounded-sm border border-[var(--color-border)] bg-[var(--color-surface-2)] px-2.5 py-1 text-sm text-[var(--color-ink-2)]"
+                >
+                  {item.name}
+                </span>
+              ))}
+            </div>
+          </section>
+        ))
+      }
+    </div>
+
+    {/* Rest: compact cards in 2-col grid */}
+    <div class="grid gap-4 sm:grid-cols-2">
+      {
+        rest.map((group, i) => (
+          <section
+            class="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-5 transition-colors duration-200 hover:border-[var(--color-border-strong)]"
+            data-reveal
+            data-reveal-delay={String((i + 2) * 50)}
+          >
+            <div class="mb-4 flex items-center gap-3">
+              <span class="font-mono text-xs text-[var(--color-accent)]">{group.index}</span>
+              <h2 class="text-base font-semibold text-[var(--color-ink)]">{group.category}</h2>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              {group.items.map((item) => (
+                <span
+                  class="rounded-sm border border-[var(--color-border)] bg-[var(--color-surface-2)] px-2 py-0.5 text-xs text-[var(--color-ink-3)]"
+                >
+                  {item.name}
+                </span>
+              ))}
+            </div>
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</PageLayout>
