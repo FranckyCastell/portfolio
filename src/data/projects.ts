@@ -13,6 +13,22 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "cloudia",
+    name: "CloudIA",
+    tagline: "AI-Powered DevOps Assistant built on Amazon Bedrock AgentCore.",
+    description:
+      "Internal AI assistant for multi-account AWS operations at IThinkUPC. CloudIA investigates infrastructure incidents by correlating Centreon monitoring, Jira tickets, and live AWS APIs across 130+ client accounts through natural language — reducing diagnosis time from days to minutes. Built with configuration-over-code using Terraform, a SigV4-signed MCP proxy for cross-account read-only access, persistent memory, and a budget kill switch.",
+    year: "2026",
+    status: "active",
+    featured: true,
+    tags: ["AWS Bedrock", "AgentCore", "Terraform", "Python", "Go", "MCP"],
+    highlights: [
+      "Cross-account read-only AssumeRole via SigV4-signed MCP proxy.",
+      "Reduces incident diagnosis time from an average of 6 days to minutes across 130+ accounts.",
+      "Persistent semantic and episodic memory strategies that accumulate knowledge.",
+    ],
+  },
+  {
     slug: "markus",
     name: "Markus",
     tagline: "Personal AI assistant with GraphRAG memory and clinical tools.",
@@ -34,7 +50,7 @@ export const projects: Project[] = [
     name: "Homer CLI",
     tagline: "One tool to unify the Terraform and Packer lifecycle.",
     description:
-      "A wrapper over Terraform and Packer that unifies and simplifies infrastructure lifecycle management. Flexible syntax and intuitive commands (plan, apply, build, destroy) ensure consistency across environments. Includes homer unlock to safely release Terraform state locks without leaving the terminal.",
+      "A wrapper over Terraform and Packer that unifies and simplifies infrastructure lifecycle management. Flexible syntax and intuitive commands (plan, apply, build, unlock) ensure consistency. Adopted company-wide at IThinkUPC, saving the team ~5 hours per week in manual operations across 130+ client environments.",
     year: "2025",
     status: "active",
     featured: true,
@@ -42,8 +58,8 @@ export const projects: Project[] = [
     links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/homer" }],
     highlights: [
       "Single command interface for plan/apply/build/destroy across multiple environments.",
-      "Safe state-lock release with `homer unlock`.",
-      "Started as a 3-line alias, grew into a 400+ line CLI adopted internally.",
+      "Safe state-lock release with `homer unlock` without leaving the terminal.",
+      "Adopted by the entire DevOps team across 130+ client environments.",
     ],
   },
   {
