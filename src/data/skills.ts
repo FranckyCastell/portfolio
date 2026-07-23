@@ -55,6 +55,8 @@ export const skillGroups: SkillGroup[] = [
       { name: "GitHub Actions" },
       { name: "AWS CodeBuild" },
       { name: "n8n" },
+      { name: "Jira" },
+      { name: "Git" },
     ],
   },
   {
@@ -86,6 +88,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "VPN" },
       { name: "Proxmox" },
       { name: "Docker" },
+      { name: "FastAPI" },
     ],
   },
 ];
