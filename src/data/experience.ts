@@ -21,7 +21,7 @@ export const experiences: Experience[] = [
     mode: "Hybrid",
     current: true,
     summary:
-      "Architecting and managing AWS infrastructure for 130+ government and enterprise clients in a multi-account environment. Leading internal tooling development and the adoption of AI-driven operations.",
+      "Architecting and managing multi-cloud infrastructure (AWS, Azure) for 130+ government, enterprise, and NGO clients. Leading internal tooling development and the adoption of AI-driven operations.",
     highlights: [
       "Designed and deployed CloudIA, an AI-powered DevOps assistant (Bedrock AgentCore) that reduces incident diagnosis from 6 days to minutes across 130+ client accounts.",
       "Built Homer CLI (Python) to abstract Terraform and Packer workflows, saving the team ~5 hours/week company-wide.",
@@ -29,7 +29,7 @@ export const experiences: Experience[] = [
       "Orchestrating advanced GitHub Actions pipelines with automated testing, security scans and seamless rollouts.",
       "Designing end-to-end monitoring with Centreon, Grafana, and CloudWatch for real-time visibility.",
     ],
-    stack: ["AWS", "Terraform", "Packer", "GitHub Actions", "Centreon", "Grafana", "Python", "n8n"],
+    stack: ["AWS", "Azure", "Terraform", "Packer", "GitHub Actions", "Centreon", "Grafana", "Python", "n8n"],
   },
   {
     role: "SysAdmin & Cloud Services Administrator",
