@@ -13,6 +13,24 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "agentforge",
+    name: "AgentForge",
+    tagline: "Multi-agent orchestrator — drop YAML, get agents.",
+    description:
+      "A multi-agent orchestration framework where adding an agent is as simple as dropping YAML files into a directory. Built on Google ADK with 11 LLM providers (OpenRouter, Anthropic, Groq, Gemini, local models…), MCP tool integration (Open-Meteo, DuckDuckGo — zero API keys), dynamic system prompt generation from agent skill definitions, and a terminal UI with delegation visualization.",
+    year: "2026",
+    status: "active",
+    featured: true,
+    tags: ["Python", "LLMOps", "MCP", "Multi-Agent", "Google ADK", "AI"],
+    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/agentforge" }],
+    highlights: [
+      "11 LLM providers with per-agent configuration — OpenRouter, Anthropic, Groq, Gemini, local models.",
+      "MCP tool integration — Open-Meteo weather, DuckDuckGo search — zero API keys required.",
+      "Dynamic system prompt generation from agent skill YAML definitions at startup.",
+      "Terminal UI with real-time delegation visualization across agents.",
+    ],
+  },
+  {
     slug: "cloudia",
     name: "CloudIA",
     tagline: "AI-Powered DevOps Assistant built on Amazon Bedrock AgentCore.",
