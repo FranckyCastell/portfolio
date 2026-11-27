@@ -5,30 +5,42 @@ const title = "AIOps de solo lectura · Francesc Castell";
 const description =
   "Agentes de solo lectura que investigan incidentes, correlacionan señales y proponen la causa. Para equipos que operan AWS, tengan guardia o no.";
 
-const useCases = [
+const scenarios = [
   {
-    title: "Incidentes",
-    body: "Investiga qué pasó, qué lo provocó y qué mirar primero, sin correlacionar herramientas a mano.",
+    label: "Incidente",
+    question: "¿Qué pasó anoche en la API?",
+    tag: "causa",
+    result: "pool agotado tras el deploy",
+    meta: "confianza 0,92 · 8s · 0,04 €",
+    pill: "causa",
+    status: "causa: pool agotado tras el deploy",
   },
   {
-    title: "Ruido de alertas",
-    body: "Agrupa señales por servicio y separa lo que importa de lo que solo hace ruido.",
+    label: "Coste",
+    question: "¿Por qué subió la factura de marzo?",
+    tag: "coste",
+    result: "NAT Gateway y logs retenidos",
+    meta: "confianza 0,88 · 11s · 0,05 €",
+    pill: "coste",
+    status: "coste: NAT Gateway y logs retenidos",
   },
   {
-    title: "Postmortems",
-    body: "Reconstruye la línea de tiempo con evidencia de logs, tickets y deploys.",
+    label: "Cambio",
+    question: "¿Qué toca este PR?",
+    tag: "impacto",
+    result: "3 servicios, 1 bucket, sin downtime",
+    meta: "confianza 0,95 · 9s · 0,03 €",
+    pill: "impacto",
+    status: "impacto: 3 servicios y 1 bucket",
   },
   {
-    title: "Onboarding",
-    body: "Responde preguntas sobre la infraestructura citando la fuente, no de memoria.",
-  },
-  {
-    title: "Coste",
-    body: "Investiga picos de gasto y qué recurso o cambio los provocó.",
-  },
-  {
-    title: "Auditoría",
-    body: "Consultas de solo lectura, con allowlist y registro de cada paso.",
+    label: "Dependencias",
+    question: "¿Quién depende de este servicio?",
+    tag: "mapa",
+    result: "4 consumidores en 2 equipos",
+    meta: "confianza 0,90 · 7s · 0,03 €",
+    pill: "mapa",
+    status: "mapa: 4 consumidores en 2 equipos",
   },
 ];
 
@@ -62,6 +74,32 @@ const steps = [
     n: "03",
     title: "Mido",
     body: "Modo sombra sobre casos reales. Informe de precisión, tiempo y coste.",
+  },
+];
+
+const trust = [
+  { k: "Solo lectura", v: "Roles ReadOnly y allowlist. Ninguna escritura." },
+  { k: "Sin retención", v: "Tus datos no se guardan fuera de tu cuenta." },
+  { k: "Región EU", v: "Inferencia en Europa por defecto." },
+  { k: "Evidencia", v: "Cada respuesta cita la fuente y el paso." },
+];
+
+const faq = [
+  {
+    q: "¿Puede escribir o desplegar?",
+    a: "No. Corre con roles de solo lectura y una allowlist de herramientas. Si una investigación sugiere un cambio, lo entrega como diff y la PR la abres tú.",
+  },
+  {
+    q: "¿Dónde van mis datos?",
+    a: "Se quedan en tu cuenta. Inferencia en región europea por defecto, sin entrenamiento con tus datos y sin retención fuera de tu entorno.",
+  },
+  {
+    q: "¿Cuánto tarda el piloto?",
+    a: "Dos semanas: la primera es conexión y límites; la segunda, casos reales y medición.",
+  },
+  {
+    q: "¿Qué necesito para empezar?",
+    a: "Una cuenta AWS, un rol de lectura y tres fuentes: logs, ticketing y monitorización.",
   },
 ];
 
@@ -99,14 +137,14 @@ const mailto =
           AIOps · agentes de solo lectura
         </p>
         <h1 class="mt-5 font-display text-[clamp(2.3rem,6vw,4.4rem)] font-semibold leading-[1.02] tracking-[-0.035em] text-[var(--color-ink)]">
-          Tu equipo no necesita<br />
-          más alarmas.<br />
-          <span class="text-[var(--color-accent)]">Necesita respuestas.</span>
+          Un agente que entiende<br />
+          tu infraestructura.<br />
+          <span class="text-[var(--color-accent)]">Y no la toca.</span>
         </h1>
         <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[var(--color-ink-3)] md:text-lg">
-          Agentes de solo lectura que investigan incidentes, correlacionan
-          señales y proponen la causa. Para equipos que operan AWS,
-          tengan guardia o no.
+          Lee logs, código, tickets y documentación. Responde con la fuente,
+          propone el siguiente paso y nunca escribe. Para equipos que operan
+          AWS, tengan guardia o no.
         </p>
         <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
           <a
@@ -117,10 +155,10 @@ const mailto =
             <span aria-hidden="true">→</span>
           </a>
           <a
-            href="#casos"
+            href="#como"
             class="inline-flex items-center gap-2 rounded-sm border border-[var(--color-border-strong)] bg-[var(--color-surface-2)] px-5 py-3 text-sm font-semibold text-[var(--color-ink)] transition-colors hover:border-[var(--color-accent)]"
           >
-            Ver qué puede hacer
+            Ver cómo funciona
           </a>
         </div>
       </div>
@@ -146,28 +184,53 @@ const mailto =
             </span>
           </div>
 
+          <div class="flex items-baseline gap-3 border-b border-[var(--color-border)] px-5 py-3">
+            <span class="font-mono text-[9px] uppercase tracking-[0.18em] text-[var(--color-ink-5)]">pregunta</span>
+            <span class="text-sm text-[var(--color-ink-2)]" data-question>{scenarios[0].question}</span>
+          </div>
+
           <div class="scene">
             <canvas id="sim-canvas" aria-hidden="true"></canvas>
             <div class="scene-labels" aria-hidden="true">
-              <span class="lbl" style="left:5%;top:7%">alertas</span>
+              <span class="lbl" style="left:5%;top:7%">señales</span>
               <span class="lbl" style="left:50%;top:76%;transform:translateX(-50%)">agente</span>
               <span class="lbl" style="right:4%;top:7%">fuentes</span>
               <span class="src" style="right:3%;top:22%">CloudWatch</span>
-              <span class="src" style="right:3%;top:47%">Centreon</span>
+              <span class="src" style="right:3%;top:47%">GitHub</span>
               <span class="src" style="right:3%;top:72%">Jira</span>
             </div>
           </div>
 
+          <div class="flex flex-wrap gap-1.5 border-t border-[var(--color-border)] px-5 py-3">
+            {
+              scenarios.map((s, i) => (
+                <button
+                  type="button"
+                  data-scenario={i}
+                  data-final-question={s.question}
+                  data-final-tag={s.tag}
+                  data-final-result={s.result}
+                  data-final-meta={s.meta}
+                  data-final-pill={s.pill}
+                  data-final-status={s.status}
+                  class:list={["sim-tab", { "is-active": i === 0 }]}
+                >
+                  {s.label}
+                </button>
+              ))
+            }
+          </div>
+
+          <p class="border-t border-[var(--color-border)] px-5 py-2.5 font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--color-ink-5)]">
+            también: postmortems · onboarding · auditoría
+          </p>
+
           <div class="sim-result" aria-live="polite">
             <span class="result-placeholder">esperando diagnóstico…</span>
             <span class="result-content">
-              <span class="result-tag">causa</span>
-              <span class="result-text">
-                {"pool agotado tras el deploy".split("").map((ch, i) => (
-                  <span style={`--c:${i}`}>{ch === " " ? "\u00A0" : ch}</span>
-                ))}
-              </span>
-              <span class="result-meta">8s · 0,04 €</span>
+              <span class="result-tag" data-tag>causa</span>
+              <span class="result-text" data-result-text></span>
+              <span class="result-meta" data-meta>8s · 0,04 €</span>
             </span>
           </div>
 
@@ -185,34 +248,6 @@ const mailto =
               Repetir ↺
             </button>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- USE CASES -->
-    <section id="casos" class="border-t border-[var(--color-border)]">
-      <div class="mx-auto w-full max-w-5xl px-6 py-16 md:py-20">
-        <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-5)]">Qué puede hacer</p>
-        <h2 class="mt-3 font-display text-2xl md:text-3xl font-semibold leading-tight text-[var(--color-ink)]">
-          No es solo para guardias.
-        </h2>
-        <div class="mt-8 grid gap-x-10 gap-y-7 sm:grid-cols-2">
-          {
-            useCases.map((u) => (
-              <div class="flex gap-3">
-                <span class="mt-1 shrink-0 text-[var(--color-accent)]">→</span>
-                <div>
-                  <h3 class="text-base font-semibold text-[var(--color-ink)]">{u.title}</h3>
-                  <p class="mt-1 text-sm leading-relaxed text-[var(--color-ink-3)]">{u.body}</p>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-        <div class="mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-[var(--color-border)] pt-5 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--color-ink-5)]">
-          <span>Solo lectura</span>
-          <span>Tus fuentes</span>
-          <span>Coste acotado</span>
         </div>
       </div>
     </section>
@@ -275,7 +310,7 @@ const mailto =
     <!-- HOW -->
     <section id="como" class="border-t border-[var(--color-border)]">
       <div class="mx-auto w-full max-w-5xl px-6 py-16 md:py-20">
-        <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-5)]">Cómo funciona</p>
+        <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-5)]">Cómo funciona el piloto</p>
         <div class="mt-8 grid gap-8 sm:grid-cols-3">
           {
             steps.map((s) => (
@@ -284,6 +319,40 @@ const mailto =
                 <h2 class="mt-2 text-lg font-semibold text-[var(--color-ink)]">{s.title}</h2>
                 <p class="mt-2 text-sm leading-relaxed text-[var(--color-ink-3)]">{s.body}</p>
               </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST -->
+    <section class="border-t border-[var(--color-border)]">
+      <div class="mx-auto grid w-full max-w-5xl gap-6 px-6 py-12 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          trust.map((t) => (
+            <div>
+              <div class="font-mono text-[9px] uppercase tracking-[0.16em] text-[var(--color-accent)]">{t.k}</div>
+              <p class="mt-1 text-sm leading-relaxed text-[var(--color-ink-3)]">{t.v}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="border-t border-[var(--color-border)]">
+      <div class="mx-auto w-full max-w-3xl px-6 py-16 md:py-20">
+        <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-5)]">Preguntas</p>
+        <div class="mt-6 divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
+          {
+            faq.map((item) => (
+              <details class="group py-4">
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-medium text-[var(--color-ink)]">
+                  {item.q}
+                  <span class="text-[var(--color-accent)] transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <p class="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--color-ink-3)]">{item.a}</p>
+              </details>
             ))
           }
         </div>
@@ -411,6 +480,32 @@ const mailto =
       font-size: 8px;
       padding: 0.15rem 0.3rem;
     }
+  }
+
+  .sim-tab {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-ink-4);
+    transition:
+      border-color 0.25s,
+      color 0.25s,
+      background-color 0.25s;
+  }
+
+  .sim-tab:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .sim-tab.is-active {
+    border-color: var(--color-accent);
+    background: var(--color-accent-glow);
+    color: var(--color-accent);
   }
 
   .sim-result {
@@ -593,6 +688,11 @@ const mailto =
   const statusEl = sim?.querySelector("[data-status]");
   const pillEl = sim?.querySelector("[data-pill]");
   const replay = sim?.querySelector("[data-replay]");
+  const questionEl = sim?.querySelector("[data-question]");
+  const tagEl = sim?.querySelector("[data-tag]");
+  const resultTextEl = sim?.querySelector("[data-result-text]");
+  const metaEl = sim?.querySelector("[data-meta]");
+  const tabs = sim ? Array.from(sim.querySelectorAll("[data-scenario]")) : [];
   const ctx = canvas?.getContext("2d");
 
   if (sim && canvas && ctx && statusEl && pillEl) {
@@ -601,10 +701,10 @@ const mailto =
     const RED = "#e5484d";
 
     const STATES = [
-      { state: "0", status: "14 alertas sin correlacionar", pill: "14 alertas", tone: "alert", at: 0 },
-      { state: "1", status: "conectando 3 fuentes", pill: "investigando", tone: "work", at: 900 },
-      { state: "2", status: "correlacionando 14 señales", pill: "correlacionando", tone: "work", at: 2300 },
-      { state: "3", status: "causa: pool agotado tras el deploy", pill: "causa", tone: "done", at: 3900 },
+      { state: "0", status: "14 señales sin correlacionar", pill: "señales", tone: "alert", at: 0 },
+      { state: "1", status: "conectando 3 fuentes", pill: "leyendo", tone: "work", at: 900 },
+      { state: "2", status: "correlacionando señales", pill: "correlacionando", tone: "work", at: 2300 },
+      { state: "3", status: "", pill: "", tone: "done", at: 3900 },
     ];
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -626,6 +726,9 @@ const mailto =
     let packets = [];
     let rings = [];
     let timers = [];
+    let finalPill = "causa";
+    let finalTone = "done";
+    let finalStatus = "";
     const pointer = { x: 0, y: 0, tx: 0, ty: 0, active: false };
 
     function size() {
@@ -893,12 +996,33 @@ const mailto =
       raf = requestAnimationFrame(frame);
     }
 
+    function setResult(text) {
+      if (!resultTextEl) return;
+      resultTextEl.textContent = "";
+      Array.from(text).forEach((ch, i) => {
+        const span = document.createElement("span");
+        span.style.setProperty("--c", String(i));
+        span.textContent = ch === " " ? "\u00A0" : ch;
+        resultTextEl.appendChild(span);
+      });
+    }
+
+    function setFinal(tab) {
+      finalPill = tab.dataset.finalPill || "causa";
+      finalTone = "done";
+      finalStatus = tab.dataset.finalStatus || "";
+      if (tagEl) tagEl.textContent = tab.dataset.finalTag || "causa";
+      if (metaEl) metaEl.textContent = tab.dataset.finalMeta || "";
+      setResult(tab.dataset.finalResult || "");
+    }
+
     function setState(i) {
       const s = STATES[i];
       sim.dataset.state = s.state;
-      statusEl.textContent = s.status;
-      pillEl.textContent = s.pill;
-      pillEl.dataset.tone = s.tone;
+      const last = i === STATES.length - 1;
+      statusEl.textContent = last ? finalStatus : s.status;
+      pillEl.textContent = last ? finalPill : s.pill;
+      pillEl.dataset.tone = last ? finalTone : s.tone;
     }
 
     function play() {
@@ -923,6 +1047,17 @@ const mailto =
       raf = requestAnimationFrame(frame);
     }
 
+    function selectTab(i, restart = true) {
+      tabs.forEach((t, j) => t.classList.toggle("is-active", j === i));
+      const tab = tabs[i];
+      if (!tab) return;
+      if (questionEl) questionEl.textContent = tab.dataset.finalQuestion || "";
+      setFinal(tab);
+      if (restart) play();
+    }
+
+    tabs.forEach((tab, i) => tab.addEventListener("click", () => selectTab(i)));
+
     sim.addEventListener("pointermove", (e) => {
       const rect = canvas.getBoundingClientRect();
       pointer.tx = e.clientX - rect.left;
@@ -937,6 +1072,8 @@ const mailto =
     sim.addEventListener("pointerleave", () => {
       pointer.active = false;
     });
+
+    if (tabs.length) selectTab(0, false);
 
     const io = new IntersectionObserver(
       (entries) => {
