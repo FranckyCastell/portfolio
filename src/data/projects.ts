@@ -150,6 +150,6 @@ export const projects: Project[] = [
     year: "2026",
     status: "active",
     tags: ["Astro", "Tailwind CSS", "TypeScript", "Cloudflare", "SEO"],
-    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/Portfolio" }],
+    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/portfolio" }],
   },
 ];
