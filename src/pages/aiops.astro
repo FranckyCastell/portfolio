@@ -25,54 +25,41 @@ const toneClass: Record<string, string> = {
   positive: "text-[var(--color-positive)]",
 };
 
-const steps = [
+const pillars = [
   {
-    n: "01",
-    title: "Conecto tus fuentes",
-    body: "CloudWatch, tu ticketing y tu monitorización. Tres fuentes en el piloto, las que ya usas.",
+    title: "Solo lectura",
+    body: "Roles ReadOnly y allowlist de herramientas. Cualquier escritura falla con AccessDenied.",
   },
   {
-    n: "02",
-    title: "Fijo el límite",
-    body: "Allowlist explícita de herramientas, sin permisos de escritura, y un techo de coste por investigación.",
+    title: "Tus fuentes",
+    body: "CloudWatch, Centreon, Grafana, Jira y tu propia documentación, como herramientas tipadas.",
   },
   {
-    n: "03",
-    title: "Modo sombra",
-    body: "El agente diagnostica en paralelo a tu equipo, sin actuar. Se compara con lo que hicisteis vosotros.",
-  },
-  {
-    n: "04",
-    title: "Informe",
-    body: "Precisión, tiempo y coste por investigación, con los casos reales de las dos semanas.",
+    title: "Coste acotado",
+    body: "Un techo por investigación y el coste medido en cada una. Sin sorpresas en la factura.",
   },
 ];
 
-const faq = [
+const steps = [
   {
-    q: "¿Necesito Amazon Bedrock AgentCore?",
-    a: "No. Es la plataforma que uso y la que mejor conozco, pero el diseño se puede llevar a otros entornos. Lo importante es el modelo de permisos, no la marca.",
+    n: "01",
+    title: "Conecto",
+    body: "Tres fuentes en el piloto: las que ya usas para operar.",
   },
   {
-    q: "¿El agente puede tocar producción?",
-    a: "No. Corre con roles de solo lectura y una allowlist de herramientas. Cualquier llamada de escritura falla con AccessDenied. No es una promesa del prompt: es IAM.",
+    n: "02",
+    title: "Limito",
+    body: "Allowlist explícita, sin escritura, y un techo de coste por investigación.",
   },
   {
-    q: "¿Qué pasa con mis datos?",
-    a: "Se quedan en tu cuenta. Inferencia en región europea por defecto, sin entrenamiento con tus datos y sin acceso desde fuera de tu entorno.",
-  },
-  {
-    q: "¿Cuánto tarda?",
-    a: "El piloto, dos semanas desde que tengo acceso. La primera semana es conexión y límites; la segunda, casos reales y medición.",
-  },
-  {
-    q: "¿Y si no tenemos guardia?",
-    a: "Entonces no es para ti. Esto sirve a equipos que ya reciben páginas y pierden tiempo correlacionando herramientas.",
+    n: "03",
+    title: "Mido",
+    body: "Modo sombra sobre incidentes reales. Informe de precisión, tiempo y coste.",
   },
 ];
 
 const mailto =
-  "mailto:hola@francastell.com?subject=Piloto%20AIOps&body=Hola%20Francesc%2C%0A%0ANos%20interesa%20el%20piloto.%20Nuestro%20entorno%3A%0A";
+  "mailto:hola@francastell.com?subject=AIOps&body=Hola%20Francesc%2C%0A%0ANos%20interesa%20ver%20esto.%20Nuestro%20entorno%3A%0A";
 ---
 
 <LandingLayout title={title} description={description}>
@@ -97,151 +84,100 @@ const mailto =
 
   <main>
     <!-- HERO -->
-    <section class="relative overflow-hidden border-b border-[var(--color-border)]">
-      <div class="absolute inset-0 grid-pattern opacity-20" aria-hidden="true"></div>
-      <div class="relative mx-auto grid w-full max-w-6xl gap-12 px-6 py-20 md:py-28 lg:grid-cols-[1.05fr_1fr] lg:items-center">
-        <div>
-          <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-accent)]">
-            AIOps · agentes de solo lectura
-          </p>
-          <h1 class="mt-5 font-display text-[clamp(2.2rem,5vw,3.6rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-[var(--color-ink)]">
-            Tu guardia no necesita más alarmas.<br />
-            <span class="text-[var(--color-accent)]">Necesita un primer diagnóstico.</span>
-          </h1>
-          <p class="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-[var(--color-ink-3)]">
-            Construyo agentes que leen CloudWatch, tu ticketing y tu monitorización,
-            correlacionan el incidente y proponen la causa. Sin permisos de escritura,
-            en tu cuenta y con el coste acotado por investigación.
-          </p>
-          <div class="mt-9 flex flex-wrap items-center gap-3">
-            <a
-              href="#piloto"
-              class="inline-flex items-center gap-2 rounded-sm bg-[var(--color-ink)] px-5 py-3 text-sm font-semibold text-[var(--color-canvas)] transition-colors hover:bg-[var(--color-accent)]"
-            >
-              Ver el piloto
-              <span aria-hidden="true">↓</span>
-            </a>
-            <a
-              href={mailto}
-              class="inline-flex items-center gap-2 rounded-sm border border-[var(--color-border-strong)] bg-[var(--color-surface-2)] px-5 py-3 text-sm font-semibold text-[var(--color-ink)] transition-colors hover:border-[var(--color-accent)]"
-            >
-              20 minutos
-            </a>
-          </div>
-          <p class="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--color-ink-5)]">
-            AWS · Bedrock AgentCore · MCP · Terraform
-          </p>
-        </div>
+    <section class="relative overflow-hidden">
+      <div class="hero-glow" aria-hidden="true"></div>
 
-        <!-- TRACE -->
-        <div class="rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] shadow-[var(--shadow-lg)]">
-          <div class="flex items-center justify-between border-b border-[var(--color-border)] px-4 py-2.5">
+      <div class="relative mx-auto w-full max-w-4xl px-6 pt-20 pb-12 text-center md:pt-28">
+        <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-accent)]">
+          AIOps · agentes de solo lectura
+        </p>
+        <h1 class="mt-5 font-display text-[clamp(2.3rem,6vw,4.4rem)] font-semibold leading-[1.02] tracking-[-0.035em] text-[var(--color-ink)]">
+          La guardia no necesita<br />
+          más alarmas.<br />
+          <span class="text-[var(--color-accent)]">Necesita un diagnóstico.</span>
+        </h1>
+        <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[var(--color-ink-3)] md:text-lg">
+          Agentes que leen CloudWatch, tu ticketing y tu monitorización,
+          correlacionan el incidente y proponen la causa. En tu cuenta.
+          Sin permisos de escritura.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href={mailto}
+            class="inline-flex items-center gap-2 rounded-sm bg-[var(--color-ink)] px-5 py-3 text-sm font-semibold text-[var(--color-canvas)] transition-colors hover:bg-[var(--color-accent)]"
+          >
+            Hablemos
+            <span aria-hidden="true">→</span>
+          </a>
+          <a
+            href="#como"
+            class="inline-flex items-center gap-2 rounded-sm border border-[var(--color-border-strong)] bg-[var(--color-surface-2)] px-5 py-3 text-sm font-semibold text-[var(--color-ink)] transition-colors hover:border-[var(--color-accent)]"
+          >
+            Ver cómo funciona
+          </a>
+        </div>
+      </div>
+
+      <!-- TRACE -->
+      <div class="relative mx-auto w-full max-w-5xl px-6 pb-20 md:pb-28">
+        <div class="overflow-hidden rounded-lg border border-[var(--color-border-strong)] bg-[var(--color-surface)] shadow-[var(--shadow-lg)]">
+          <div class="flex items-center justify-between border-b border-[var(--color-border)] px-5 py-3">
             <div class="flex items-center gap-2">
-              <span class="size-1.5 rounded-full bg-[var(--color-positive)]"></span>
-              <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-ink-4)]">
-                agent trace
-              </span>
+              <span class="size-2 rounded-full bg-[var(--color-negative)]"></span>
+              <span class="size-2 rounded-full bg-[var(--color-accent)]"></span>
+              <span class="size-2 rounded-full bg-[var(--color-positive)]"></span>
             </div>
-            <span class="font-mono text-[10px] text-[var(--color-ink-5)]">live</span>
+            <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-ink-5)]">
+              agent trace · 03:07
+            </span>
           </div>
-          <div class="space-y-1.5 px-4 py-5 font-mono text-[11px] sm:text-xs">
+          <div class="space-y-2 px-4 py-6 font-mono text-[10px] sm:px-5 sm:text-sm">
             {
               trace.map((line, i) => (
-                <div class="trace-line flex gap-3" style={`--i:${i}`}>
-                  <span class="w-[4.6rem] shrink-0 text-[var(--color-ink-5)]">{line.t}</span>
-                  <span class={`w-[3.4rem] shrink-0 uppercase ${toneClass[line.tone]}`}>{line.tag}</span>
+                <div class="trace-line flex gap-3 sm:gap-4" style={`--i:${i}`}>
+                  <span class="w-[4.2rem] shrink-0 text-[var(--color-ink-5)] sm:w-[4.8rem]">{line.t}</span>
+                  <span class={`w-[3.2rem] shrink-0 uppercase ${toneClass[line.tone]} sm:w-[3.8rem]`}>{line.tag}</span>
                   <span class="text-[var(--color-ink-2)]">{line.text}</span>
                 </div>
               ))
             }
-            <div class="trace-line flex gap-3" style={`--i:${trace.length}`}>
-              <span class="w-[4.6rem] shrink-0 text-[var(--color-ink-5)]">03:07:20</span>
+            <div class="trace-line flex gap-3 sm:gap-4" style={`--i:${trace.length}`}>
+              <span class="w-[4.2rem] shrink-0 text-[var(--color-ink-5)] sm:w-[4.8rem]">03:07:20</span>
               <span class="text-[var(--color-accent)]">▌</span>
             </div>
           </div>
-          <div class="border-t border-[var(--color-border)] px-4 py-2.5 font-mono text-[10px] text-[var(--color-ink-5)]">
-            9 pasos · 8 segundos · sin escribir nada
+          <div class="flex items-center justify-between border-t border-[var(--color-border)] px-5 py-3 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--color-ink-5)]">
+            <span>9 pasos · 8 segundos</span>
+            <span>sin escribir nada</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PROBLEM -->
-    <section class="border-b border-[var(--color-border)]">
-      <div class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
-        <div class="grid gap-10 md:grid-cols-[1fr_1.2fr] md:gap-16">
-          <h2 class="font-display text-2xl md:text-3xl font-semibold leading-tight text-[var(--color-ink)]">
-            El problema no es la falta de datos.<br />
-            <span class="text-[var(--color-ink-4)]">Es el tiempo entre la alerta y la causa.</span>
-          </h2>
-          <div class="space-y-6">
-            <p class="text-base md:text-lg leading-relaxed text-[var(--color-ink-3)]">
-              Una guardia normal recibe cientos de alertas al día y las correlaciona
-              a mano entre el monitor, el ticketing y la consola de AWS. A las tres de
-              la mañana, eso son cuarenta minutos antes de saber qué se rompió.
-            </p>
-            <div class="grid gap-4 sm:grid-cols-3">
-              <div class="border-l-2 border-[var(--color-accent)] pl-4">
-                <div class="font-display text-2xl font-semibold text-[var(--color-ink)]">4.100</div>
-                <div class="mt-1 text-xs text-[var(--color-ink-4)]">alertas y eventos al día por organización</div>
-              </div>
-              <div class="border-l-2 border-[var(--color-border-strong)] pl-4">
-                <div class="font-display text-2xl font-semibold text-[var(--color-ink)]">92%</div>
-                <div class="mt-1 text-xs text-[var(--color-ink-4)]">necesita correlacionar 10+ herramientas</div>
-              </div>
-              <div class="border-l-2 border-[var(--color-border-strong)] pl-4">
-                <div class="font-display text-2xl font-semibold text-[var(--color-ink)]">95%</div>
-                <div class="mt-1 text-xs text-[var(--color-ink-4)]">dice que su AIOps no agéntico se queda corto</div>
-              </div>
+    <!-- PILLARS -->
+    <section class="border-t border-[var(--color-border)]">
+      <div class="mx-auto grid w-full max-w-5xl gap-8 px-6 py-16 sm:grid-cols-3 md:py-20">
+        {
+          pillars.map((p) => (
+            <div>
+              <h2 class="text-base font-semibold text-[var(--color-ink)]">{p.title}</h2>
+              <p class="mt-2 text-sm leading-relaxed text-[var(--color-ink-3)]">{p.body}</p>
             </div>
-            <p class="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--color-ink-5)]">
-              Omdia para Cisco, 2026 · organizaciones de +500 empleados
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- WHAT -->
-    <section class="border-b border-[var(--color-border)]">
-      <div class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
-        <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-5)]">Lo que construyo</p>
-        <div class="mt-8 grid gap-4 md:grid-cols-3">
-          <article class="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
-            <h3 class="text-lg font-semibold text-[var(--color-ink)]">Agente de solo lectura</h3>
-            <p class="mt-2 text-sm leading-relaxed text-[var(--color-ink-3)]">
-              Roles de solo lectura, allowlist de herramientas y ninguna acción de escritura.
-              La seguridad no está en el prompt: está en IAM.
-            </p>
-          </article>
-          <article class="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
-            <h3 class="text-lg font-semibold text-[var(--color-ink)]">Conectores MCP</h3>
-            <p class="mt-2 text-sm leading-relaxed text-[var(--color-ink-3)]">
-              CloudWatch, Centreon, Grafana, Jira y tu propia documentación, expuestos como
-              herramientas tipadas en lugar de prompts sueltos.
-            </p>
-          </article>
-          <article class="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
-            <h3 class="text-lg font-semibold text-[var(--color-ink)]">Evals y coste</h3>
-            <p class="mt-2 text-sm leading-relaxed text-[var(--color-ink-3)]">
-              Un conjunto de casos con respuesta esperada y un techo de coste por investigación.
-              Sin eso, no hay despliegue: hay una demo.
-            </p>
-          </article>
-        </div>
+          ))
+        }
       </div>
     </section>
 
     <!-- HOW -->
-    <section class="border-b border-[var(--color-border)]">
-      <div class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
-        <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-5)]">Cómo funciona el piloto</p>
-        <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <section id="como" class="border-t border-[var(--color-border)]">
+      <div class="mx-auto w-full max-w-5xl px-6 py-16 md:py-20">
+        <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-5)]">Cómo funciona</p>
+        <div class="mt-8 grid gap-8 sm:grid-cols-3">
           {
             steps.map((s) => (
               <div class="border-t border-[var(--color-border-strong)] pt-4">
                 <div class="font-mono text-xs text-[var(--color-accent)]">{s.n}</div>
-                <h3 class="mt-2 text-base font-semibold text-[var(--color-ink)]">{s.title}</h3>
+                <h2 class="mt-2 text-lg font-semibold text-[var(--color-ink)]">{s.title}</h2>
                 <p class="mt-2 text-sm leading-relaxed text-[var(--color-ink-3)]">{s.body}</p>
               </div>
             ))
@@ -250,95 +186,19 @@ const mailto =
       </div>
     </section>
 
-    <!-- PILOT -->
-    <section id="piloto" class="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
-      <div class="mx-auto grid w-full max-w-6xl gap-10 px-6 py-16 md:py-20 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
-        <div>
-          <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-5)]">El piloto</p>
-          <h2 class="mt-4 font-display text-3xl md:text-4xl font-semibold leading-tight text-[var(--color-ink)]">
-            Dos semanas.<br />Una cuenta.<br />Un informe con números.
-          </h2>
-          <p class="mt-5 max-w-xl text-base leading-relaxed text-[var(--color-ink-3)]">
-            No es una demo de veinte minutos ni una PoC que caduca. Es un agente
-            funcionando en modo sombra sobre tus incidentes reales, con el resultado medido.
-          </p>
-          <a
-            href={mailto}
-            class="mt-8 inline-flex items-center gap-2 rounded-sm bg-[var(--color-accent)] px-5 py-3 text-sm font-semibold text-[var(--color-canvas)] transition-colors hover:bg-[var(--color-accent-2)]"
-          >
-            Pedir el piloto
-            <span aria-hidden="true">→</span>
-          </a>
-        </div>
-        <div class="rounded-md border border-[var(--color-border-strong)] bg-[var(--color-canvas)] p-6 md:p-8">
-          <div class="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-ink-5)]">Incluye</div>
-          <ul class="mt-5 space-y-3 text-sm text-[var(--color-ink-2)]">
-            <li class="flex gap-3"><span class="text-[var(--color-accent)]">→</span> 1 cuenta AWS y hasta 3 fuentes</li>
-            <li class="flex gap-3"><span class="text-[var(--color-accent)]">→</span> 1 integración de alertas</li>
-            <li class="flex gap-3"><span class="text-[var(--color-accent)]">→</span> Allowlist y techo de coste</li>
-            <li class="flex gap-3"><span class="text-[var(--color-accent)]">→</span> 5 casos reales analizados</li>
-            <li class="flex gap-3"><span class="text-[var(--color-accent)]">→</span> Informe de precisión, tiempo y coste</li>
-            <li class="flex gap-3"><span class="text-[var(--color-accent)]">→</span> Sesión de traspaso con tu equipo</li>
-          </ul>
-          <div class="mt-6 border-t border-[var(--color-border)] pt-5">
-            <div class="font-display text-2xl font-semibold text-[var(--color-ink)]">Desde 3.500 €</div>
-            <div class="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-ink-5)]">
-              Precio cerrado · sin permanencia
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- HONESTY -->
-    <section class="border-b border-[var(--color-border)]">
-      <div class="mx-auto w-full max-w-6xl px-6 py-16 md:py-20">
-        <div class="grid gap-10 md:grid-cols-[1fr_1.2fr] md:gap-16">
-          <h2 class="font-display text-2xl md:text-3xl font-semibold leading-tight text-[var(--color-ink)]">
-            Lo que <span class="text-[var(--color-ink-4)]">no</span> hago
-          </h2>
-          <ul class="space-y-4 text-base text-[var(--color-ink-3)]">
-            <li class="flex gap-3"><span class="text-[var(--color-negative)]">×</span> No doy permisos de escritura. Ni "solo para probar".</li>
-            <li class="flex gap-3"><span class="text-[var(--color-negative)]">×</span> No sustituyo a tu equipo de guardia ni vendo un 24/7 que no puedo cubrir.</li>
-            <li class="flex gap-3"><span class="text-[var(--color-negative)]">×</span> No prometo MTTR sin haber medido el tuyo primero.</li>
-            <li class="flex gap-3"><span class="text-[var(--color-negative)]">×</span> No me quedo con tus datos ni los uso para entrenar nada.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="border-b border-[var(--color-border)]">
-      <div class="mx-auto w-full max-w-3xl px-6 py-16 md:py-20">
-        <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-5)]">Preguntas</p>
-        <div class="mt-8 divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
-          {
-            faq.map((item) => (
-              <details class="group py-5">
-                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-medium text-[var(--color-ink)]">
-                  {item.q}
-                  <span class="text-[var(--color-accent)] transition-transform group-open:rotate-45">+</span>
-                </summary>
-                <p class="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--color-ink-3)]">{item.a}</p>
-              </details>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
     <!-- CTA -->
-    <section>
-      <div class="mx-auto w-full max-w-6xl px-6 py-20 text-center md:py-28">
-        <h2 class="font-display text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-tight text-[var(--color-ink)]">
-          Si tu guardia pierde tiempo correlacionando, hablemos.
+    <section class="border-t border-[var(--color-border)]">
+      <div class="mx-auto w-full max-w-3xl px-6 py-20 text-center md:py-28">
+        <h2 class="font-display text-[clamp(2rem,4.5vw,3.2rem)] font-semibold leading-tight text-[var(--color-ink)]">
+          Hablemos.
         </h2>
-        <p class="mx-auto mt-4 max-w-xl text-base text-[var(--color-ink-3)]">
-          Veinte minutos. Me cuentas cómo investigáis hoy y te digo si esto lo mejora o no.
+        <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-[var(--color-ink-3)]">
+          Precio según alcance. En veinte minutos te digo si esto mejora tu
+          guardia o si no te sirve.
         </p>
         <a
           href={mailto}
-          class="mt-8 inline-flex items-center gap-2 rounded-sm bg-[var(--color-ink)] px-6 py-3 text-sm font-semibold text-[var(--color-canvas)] transition-colors hover:bg-[var(--color-accent)]"
+          class="mt-8 inline-flex items-center gap-2 rounded-sm bg-[var(--color-accent)] px-6 py-3 text-sm font-semibold text-[var(--color-canvas)] transition-colors hover:bg-[var(--color-accent-2)]"
         >
           hola@francastell.com
           <span aria-hidden="true">→</span>
@@ -358,11 +218,23 @@ const mailto =
 </LandingLayout>
 
 <style>
+  .hero-glow {
+    position: absolute;
+    inset: -10% 0 auto 0;
+    height: 560px;
+    background: radial-gradient(
+      55% 55% at 50% 0%,
+      color-mix(in oklab, var(--color-accent) 16%, transparent),
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
   .trace-line {
     opacity: 0;
-    transform: translateY(4px);
-    animation: trace-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: calc(var(--i) * 0.45s + 0.5s);
+    transform: translateY(3px);
+    animation: trace-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc(var(--i) * 0.42s + 0.45s);
   }
 
   @keyframes trace-in {
