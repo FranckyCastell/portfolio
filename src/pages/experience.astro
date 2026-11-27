@@ -13,8 +13,27 @@ const description =
   path="/experience"
   eyebrow="— EXPERIENCE"
   heading="Five years, five roles."
-  lede="From administering networks for municipalities to modernising AWS infrastructure for Tier-1 public sector clients. A trajectory from systems to cloud to AI-infused operations."
+  lede="From administering networks for municipalities to running a 100+ repository AWS estate. A trajectory from systems to cloud to AI operations."
 >
+  <div class="mb-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    {
+      [
+        { label: "Estate", value: "100+ repos", note: "multi-account AWS" },
+        { label: "Governance", value: "AWS Organizations", note: "StackSets · IAM Identity Center" },
+        { label: "Delivery", value: "Terraform + Actions", note: "plan/apply · drift · Trivy" },
+        { label: "Operations", value: "Grafana · Centreon", note: "CloudWatch · AI ops" },
+      ].map((item) => (
+        <div class="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
+          <div class="mono-label mb-2">{item.label}</div>
+          <div class="text-sm font-semibold text-[var(--color-ink)]">{item.value}</div>
+          <div class="mt-1 font-mono text-[10px] uppercase tracking-wider text-[var(--color-ink-5)]">
+            {item.note}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
   <div class="relative">
     <div
       class="absolute left-[7px] top-2 bottom-2 w-px bg-[var(--color-border)]"
