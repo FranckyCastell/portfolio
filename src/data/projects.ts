@@ -50,6 +50,7 @@ export const projects: Project[] = [
       "MCP gateway to Centreon, Jira, Grafana, AWS, and MyDoc runbooks.",
       "Read-only cross-account AssumeRole; any create, update, or delete call fails with AccessDenied.",
       "AgentCore Memory with semantic and episodic strategies, plus skills encoding company investigation standards.",
+      "Every investigation feeds evals and skills, so incident knowledge accumulates instead of resetting.",
     ],
   },
   {

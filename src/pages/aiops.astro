@@ -32,6 +32,21 @@ const useCases = [
   },
 ];
 
+const memory = [
+  {
+    title: "Memoria semántica",
+    body: "Servicios, owners, dependencias y runbooks. El contexto que hoy vive en la cabeza de dos personas.",
+  },
+  {
+    title: "Memoria episódica",
+    body: "Qué pasó en incidentes anteriores, qué se probó y qué funcionó. Sin volver a empezar de cero.",
+  },
+  {
+    title: "Bucle de mejora",
+    body: "Cada investigación alimenta evals y skills. El agente mejora con tu equipo, no en abstracto.",
+  },
+];
+
 const steps = [
   {
     n: "01",
@@ -194,6 +209,61 @@ const mailto =
           <span>Solo lectura</span>
           <span>Tus fuentes</span>
           <span>Coste acotado</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEMORY -->
+    <section class="border-t border-[var(--color-border)]">
+      <div class="mx-auto grid w-full max-w-5xl gap-12 px-6 py-16 md:grid-cols-[1.1fr_0.9fr] md:items-center md:py-20">
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-5)]">Memoria y aprendizaje</p>
+          <h2 class="mt-3 font-display text-2xl md:text-3xl font-semibold leading-tight text-[var(--color-ink)]">
+            No empieza de cero cada vez.
+          </h2>
+          <p class="mt-4 max-w-xl text-base leading-relaxed text-[var(--color-ink-3)]">
+            Un agente sin memoria es un buscador caro. Guarda dos tipos de contexto
+            y los usa en la siguiente investigación.
+          </p>
+          <ul class="mt-7 space-y-5">
+            {
+              memory.map((m) => (
+                <li class="flex gap-3">
+                  <span class="mt-1 shrink-0 text-[var(--color-accent)]">→</span>
+                  <div>
+                    <h3 class="text-base font-semibold text-[var(--color-ink)]">{m.title}</h3>
+                    <p class="mt-1 text-sm leading-relaxed text-[var(--color-ink-3)]">{m.body}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div class="flex justify-center">
+          <svg viewBox="0 0 360 360" class="loop" aria-hidden="true">
+            <defs>
+              <marker id="loop-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--color-accent)"></path>
+              </marker>
+            </defs>
+            <circle cx="180" cy="180" r="120" fill="none" stroke="var(--color-border)" stroke-width="1" stroke-dasharray="3 7"></circle>
+            <path d="M180 60 A120 120 0 0 1 300 180" fill="none" stroke="var(--color-accent)" stroke-opacity="0.35" stroke-width="1" marker-end="url(#loop-arrow)"></path>
+            <path d="M300 180 A120 120 0 0 1 180 300" fill="none" stroke="var(--color-accent)" stroke-opacity="0.35" stroke-width="1" marker-end="url(#loop-arrow)"></path>
+            <path d="M180 300 A120 120 0 0 1 60 180" fill="none" stroke="var(--color-accent)" stroke-opacity="0.35" stroke-width="1" marker-end="url(#loop-arrow)"></path>
+            <path d="M60 180 A120 120 0 0 1 180 60" fill="none" stroke="var(--color-accent)" stroke-opacity="0.35" stroke-width="1" marker-end="url(#loop-arrow)"></path>
+            <circle cx="180" cy="60" r="4" fill="var(--color-accent)"></circle>
+            <circle cx="300" cy="180" r="4" fill="var(--color-accent)"></circle>
+            <circle cx="180" cy="300" r="4" fill="var(--color-accent)"></circle>
+            <circle cx="60" cy="180" r="4" fill="var(--color-accent)"></circle>
+            <text x="180" y="40">investiga</text>
+            <text x="300" y="164">registra</text>
+            <text x="180" y="330">evalúa</text>
+            <text x="60" y="164">mejora</text>
+            <circle r="3" fill="var(--color-accent)" class="loop-dot">
+              <animateMotion dur="9s" repeatCount="indefinite" path="M180,60 A120,120 0 1,1 179.9,60"></animateMotion>
+            </circle>
+          </svg>
         </div>
       </div>
     </section>
@@ -444,6 +514,27 @@ const mailto =
   .sim-pill[data-tone="done"] {
     color: var(--color-positive);
     border-color: color-mix(in oklab, var(--color-positive) 45%, transparent);
+  }
+
+  .loop {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+  }
+
+  .loop text {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    fill: var(--color-ink-4);
+    text-anchor: middle;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .loop-dot {
+      display: none;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
