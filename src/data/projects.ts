@@ -9,6 +9,8 @@ export type Project = {
   links?: { label: string; url: string }[];
   highlights?: string[];
   featured?: boolean;
+  role?: string;
+  outcome?: string;
 };
 
 export const projects: Project[] = [
@@ -16,6 +18,8 @@ export const projects: Project[] = [
     slug: "agentforge",
     name: "AgentForge",
     tagline: "Multi-agent orchestrator — drop YAML, get agents.",
+    role: "Design and implementation",
+    outcome: "Adding an agent is a YAML file, with 11 providers and MCP tools that need no API keys.",
     description:
       "A multi-agent orchestration framework where adding an agent is as simple as dropping YAML files into a directory. Built on Google ADK with 11 LLM providers (OpenRouter, Anthropic, Groq, Gemini, local models…), MCP tool integration (Open-Meteo, DuckDuckGo — zero API keys), dynamic system prompt generation from agent skill definitions, and a terminal UI with delegation visualization.",
     year: "2026",
@@ -34,22 +38,26 @@ export const projects: Project[] = [
     slug: "cloudia",
     name: "CloudIA",
     tagline: "Read-only AI operations assistant built on Amazon Bedrock AgentCore.",
+    role: "Design and implementation",
+    outcome: "Read-only incident investigation across multi-account AWS, with cost capped per session.",
     description:
-      "Internal AI operations assistant for multi-account AWS at IThinkUPC. CloudIA investigates infrastructure incidents by correlating Centreon monitoring, Jira tickets, and live AWS APIs across multiple client accounts through natural language. Built configuration-over-code in Terraform, with a SigV4-signed MCP proxy for cross-account read-only access, persistent memory, and a budget kill switch.",
+      "Internal AI operations assistant for multi-account AWS at IThinkUPC. CloudIA is an Amazon Bedrock AgentCore Harness — model, tools, memory, and limits declared in Terraform — that investigates incidents by correlating Centreon, Jira, Grafana, live AWS APIs, and MyDoc runbooks. It runs from a terminal, Google Chat, or automatically over Jira tickets.",
     year: "2026",
     status: "active",
     featured: true,
-    tags: ["AWS Bedrock", "AgentCore", "Terraform", "Python", "Go", "MCP"],
+    tags: ["AWS Bedrock", "AgentCore", "Strands", "Terraform", "Python", "Go", "MCP"],
     highlights: [
-      "Cross-account read-only AssumeRole via SigV4-signed MCP proxy.",
-      "Read-only by design: explicit tool allowlist, no write actions, and a cost ceiling per session.",
-      "Persistent semantic and episodic memory strategies that accumulate knowledge.",
+      "MCP gateway to Centreon, Jira, Grafana, AWS, and MyDoc runbooks.",
+      "Read-only cross-account AssumeRole; any create, update, or delete call fails with AccessDenied.",
+      "AgentCore Memory with semantic and episodic strategies, plus skills encoding company investigation standards.",
     ],
   },
   {
     slug: "markus",
     name: "Markus",
     tagline: "Personal AI assistant with GraphRAG memory and clinical tools.",
+    role: "Design and implementation",
+    outcome: "Long-term memory on a graph, fully self-hosted in Docker.",
     description:
       "A conversational AI companion that uses a Neo4j graph database to remember deep context — who you are, how you felt, and the causal chains behind your emotions. Unlike vanilla vector RAG, Markus extracts entities (people, emotions, topics) and links them with semantic relationships. Includes 16 integrated tools: Cognitive Behavioral Therapy exercises, SMART goal coaching, journaling, crisis intervention, and an interactive mind graph. Fully self-contained in Docker with zero SaaS dependencies.",
     year: "2026",
@@ -67,6 +75,8 @@ export const projects: Project[] = [
     slug: "homer",
     name: "Homer CLI",
     tagline: "One tool to unify the Terraform and Packer lifecycle.",
+    role: "Design and implementation",
+    outcome: "Around 5 hours per week recovered for the team across client environments.",
     description:
       "A wrapper over Terraform and Packer that unifies and simplifies infrastructure lifecycle management. Flexible syntax and intuitive commands (plan, apply, build, unlock) ensure consistency. Adopted company-wide at IThinkUPC, saving the team ~5 hours per week in manual operations across client environments.",
     year: "2025",
@@ -84,6 +94,8 @@ export const projects: Project[] = [
     slug: "high-availability-architecture",
     name: "AWS High Availability Architecture",
     tagline: "Resilient multi-AZ stack with SSM and CloudWatch.",
+    role: "Design and implementation",
+    outcome: "Multi-AZ resilience with no SSH exposure and metrics every 60 seconds.",
     description:
       "Terraform codebase that provisions a complete high-availability AWS stack — VPC across multiple AZs, ALB in public subnets, EC2 Auto Scaling Group in private subnets with NAT Gateways, CloudWatch Agent for custom metrics, and Systems Manager for secure access without SSH. Built for production workloads that demand resilience.",
     year: "2025",

@@ -9,7 +9,9 @@ export const skillGroups: SkillGroup[] = [
     category: "Cloud",
     index: "01",
     items: [
-      { name: "AWS (EC2 · VPC · IAM · S3 · Lambda · ALB · WAF · Route 53 · CloudFront · CloudWatch · SSM · KMS · GuardDuty · Organizations)" },
+      { name: "AWS (EC2 · VPC · IAM · S3 · Lambda · ALB · WAF · Route 53 · CloudFront · CloudWatch · SSM · KMS · GuardDuty)" },
+      { name: "AWS Organizations · IAM Identity Center" },
+      { name: "ECS · ECR · Aurora" },
       { name: "Azure" },
     ],
   },
@@ -17,7 +19,9 @@ export const skillGroups: SkillGroup[] = [
     category: "AI Operations",
     index: "02",
     items: [
-      { name: "Amazon Bedrock" },
+      { name: "Amazon Bedrock · AgentCore Harness" },
+      { name: "AgentCore Gateway · Memory · Identity" },
+      { name: "Strands" },
       { name: "MCP (Model Context Protocol)" },
       { name: "RAG (Retrieval-Augmented Generation)" },
       { name: "Ollama" },
@@ -52,7 +56,7 @@ export const skillGroups: SkillGroup[] = [
     category: "CI/CD & Automation",
     index: "05",
     items: [
-      { name: "GitHub Actions" },
+      { name: "GitHub Actions · reusable workflows" },
       { name: "AWS CodeBuild" },
       { name: "n8n" },
       { name: "Jira" },
@@ -63,7 +67,7 @@ export const skillGroups: SkillGroup[] = [
     category: "Observability & Monitoring",
     index: "06",
     items: [
-      { name: "Grafana" },
+      { name: "Grafana Cloud (as code)" },
       { name: "Centreon" },
       { name: "CloudWatch" },
       { name: "New Relic" },
@@ -76,6 +80,7 @@ export const skillGroups: SkillGroup[] = [
     items: [
       { name: "ENS", note: "Esquema Nacional de Seguridad" },
       { name: "AWS WAF · GuardDuty · KMS · Secrets Manager" },
+      { name: "Trivy" },
       { name: "Tailscale" },
     ],
   },

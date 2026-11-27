@@ -34,12 +34,51 @@ const description =
           and automated rollouts.
         </p>
         <p>
+          The estate spans more than a hundred repositories across public
+          administration, media, retail, insurance, research, and NGOs. The work is
+          equal parts platform engineering and operations: reusable modules, cross-account
+          access, pipelines, observability, and the internal tools that keep it manageable.
+        </p>
+        <p>
           Beyond operations, I build AI agents that sit on top of infrastructure —
           <span class="text-[var(--color-accent)]">read-only by design</span>, with explicit
           tool allowlists, EU inference, and a cost ceiling. I also run a self-hosted RAG
           stack on Proxmox, Ollama, and Qdrant for privacy-sensitive work. The interesting
           part isn't the demo: it's making it survive production and a security review.
         </p>
+      </div>
+    </section>
+
+    <section class="pt-6 border-t border-[var(--color-border)]">
+      <div class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-ink-5)] mb-6">
+        — Day to day
+      </div>
+      <div class="grid gap-6 md:grid-cols-2 md:gap-8">
+        {
+          [
+            {
+              title: "Client platforms",
+              body: "Deploy and operate Moodle SaaS, web platforms, data workloads, and containerised services on shared AWS foundations.",
+            },
+            {
+              title: "Platform foundations",
+              body: "Maintain the Terraform modules, base configuration, and cross-account access model that every client environment builds on.",
+            },
+            {
+              title: "Automation",
+              body: "Ship changes through centralized GitHub Actions and build the internal CLIs that remove manual steps from operations.",
+            },
+            {
+              title: "Observability & AI ops",
+              body: "Own Grafana Cloud as code and build read-only agents that investigate incidents across accounts.",
+            },
+          ].map((item) => (
+            <div class="space-y-2.5">
+              <h3 class="text-lg md:text-xl font-semibold text-[var(--color-ink)]">{item.title}</h3>
+              <p class="text-sm md:text-base text-[var(--color-ink-3)] leading-relaxed">{item.body}</p>
+            </div>
+          ))
+        }
       </div>
     </section>
 
@@ -79,6 +118,17 @@ const description =
           ))
         }
       </div>
+    </section>
+
+    <section class="pt-6 border-t border-[var(--color-border)]">
+      <div class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-ink-5)] mb-6">
+        — What I'm looking for
+      </div>
+      <p class="max-w-2xl text-base md:text-lg text-[var(--color-ink-2)] leading-relaxed">
+        A Cloud or Platform Engineer role where infrastructure, automation, and AI
+        operations meet. I'm most useful in teams running multi-account AWS that care
+        about security, compliance, and operability — not just shipping.
+      </p>
     </section>
 
     <section class="pt-6 border-t border-[var(--color-border)]">

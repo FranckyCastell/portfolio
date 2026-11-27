@@ -48,6 +48,23 @@ const rest = projects.filter((p) => !p.featured);
           </h2>
           <p class="mt-1 text-sm text-[var(--color-ink-4)]">{p.tagline}</p>
 
+          {(p.role || p.outcome) && (
+            <div class="mt-5 grid gap-4 border-y border-[var(--color-border)] py-4 sm:grid-cols-2">
+              {p.role && (
+                <div>
+                  <div class="mono-label mb-1">Role</div>
+                  <div class="text-sm text-[var(--color-ink-2)]">{p.role}</div>
+                </div>
+              )}
+              {p.outcome && (
+                <div>
+                  <div class="mono-label mb-1">Outcome</div>
+                  <div class="text-sm text-[var(--color-ink-2)]">{p.outcome}</div>
+                </div>
+              )}
+            </div>
+          )}
+
           <p class="mt-5 text-sm sm:text-base text-[var(--color-ink-2)] leading-relaxed">
             {p.description}
           </p>
