@@ -25,7 +25,7 @@ export const experiences: Experience[] = [
     highlights: [
       "Designed and deployed CloudIA, a read-only AI operations assistant built as an Amazon Bedrock AgentCore Harness, with an MCP gateway to Centreon, Jira, Grafana, AWS, and MyDoc runbooks.",
       "Built Homer CLI (Python), a Terraform and Packer wrapper that saves the team around 5 hours per week.",
-      "Developed 15+ reusable Terraform modules standardizing deployments and ENS compliance across environments.",
+      "Work with 15+ reusable Terraform modules standardizing deployments and ENS compliance across environments.",
       "Deliver and operate client platforms on shared foundations — Moodle SaaS, web platforms, data workloads, and containerised services — with Terraform and GitHub Actions.",
       "Work across a 100+ repository Terraform estate with centralized GitHub Actions: plan/apply, drift detection, and Trivy scans on every change.",
       "Built the Grafana Cloud observability layer as code — dashboards, downtimes, and per-client views — alongside CloudWatch and Centreon.",
