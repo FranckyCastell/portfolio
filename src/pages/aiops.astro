@@ -162,7 +162,11 @@ const mailto =
             <span class="result-placeholder">esperando diagnóstico…</span>
             <span class="result-content">
               <span class="result-tag">causa</span>
-              <span class="result-text">pool agotado tras el deploy</span>
+              <span class="result-text">
+                {"pool agotado tras el deploy".split("").map((ch, i) => (
+                  <span style={`--c:${i}`}>{ch === " " ? "\u00A0" : ch}</span>
+                ))}
+              </span>
               <span class="result-meta">8s · 0,04 €</span>
             </span>
           </div>
@@ -452,6 +456,37 @@ const mailto =
     display: flex;
   }
 
+  .result-text span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  .sim[data-state="3"] .result-text span {
+    animation: letter-in 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc(var(--c) * 0.012s + 0.1s);
+  }
+
+  .sim[data-state="3"] .sim-result {
+    animation: result-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes letter-in {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes result-pop {
+    from {
+      transform: translateY(5px) scale(0.995);
+    }
+    to {
+      transform: none;
+    }
+  }
+
   .result-tag {
     font-family: var(--font-mono);
     font-size: 9px;
@@ -543,6 +578,12 @@ const mailto =
     .sim .sim-progress i {
       transition-duration: 0.01ms !important;
     }
+
+    .result-text span {
+      opacity: 1;
+      transform: none;
+      animation: none !important;
+    }
   }
 </style>
 
@@ -556,6 +597,7 @@ const mailto =
 
   if (sim && canvas && ctx && statusEl && pillEl) {
     const ACCENT = "#f0a32a";
+    const HOT = "#ffd08a";
     const RED = "#e5484d";
 
     const STATES = [
@@ -568,7 +610,7 @@ const mailto =
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
     const lerp = (a, b, t) => a + (b - a) * t;
-    const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+    const rand = (a, b) => a + Math.random() * (b - a);
 
     let W = 0;
     let H = 0;
@@ -578,9 +620,13 @@ const mailto =
     let running = false;
     let played = false;
     let nextSpawn = 1100;
+    let pulse = 0;
     let alerts = [];
+    let ambient = [];
     let packets = [];
+    let rings = [];
     let timers = [];
+    const pointer = { x: 0, y: 0, tx: 0, ty: 0, active: false };
 
     function size() {
       const rect = canvas.getBoundingClientRect();
@@ -602,45 +648,110 @@ const mailto =
     ];
 
     function seed() {
-      alerts = Array.from({ length: 30 }, () => ({
-        x: W * (0.06 + Math.random() * 0.26),
-        y: H * (0.1 + Math.random() * 0.8),
-        r: 1.1 + Math.random() * 2,
-        ph: Math.random() * Math.PI * 2,
-        sp: 0.5 + Math.random() * 0.9,
-        cap: 2300 + Math.random() * 1500,
-        red: Math.random() > 0.35,
+      alerts = Array.from({ length: 30 }, () => {
+        const x = W * rand(0.06, 0.32);
+        const y = H * rand(0.1, 0.9);
+        return {
+          x,
+          y,
+          x0: x,
+          y0: y,
+          vx: 0,
+          vy: 0,
+          r: rand(1.1, 2.8),
+          ph: rand(0, Math.PI * 2),
+          sp: rand(0.5, 1.3),
+          cap: 2300 + rand(0, 1500),
+          red: Math.random() > 0.35,
+          captured: false,
+          dead: false,
+        };
+      });
+      ambient = Array.from({ length: 38 }, () => ({
+        x: rand(0, W),
+        y: rand(0, H),
+        r: rand(0.5, 1.4),
+        a: rand(0.05, 0.2),
+        vx: rand(-0.04, 0.04),
+        vy: rand(-0.12, -0.04),
       }));
       packets = [];
+      rings = [];
       nextSpawn = 1100;
+      pulse = 0;
+    }
+
+    function control(c, s, i, t) {
+      return {
+        x: (c.x + s.x) / 2,
+        y: (c.y + s.y) / 2 + [-24, 0, 24][i] + Math.sin(t / 1400 + i * 1.7) * 7,
+      };
+    }
+
+    function bezier(p0, p1, p2, k) {
+      const m = 1 - k;
+      return {
+        x: m * m * p0.x + 2 * m * k * p1.x + k * k * p2.x,
+        y: m * m * p0.y + 2 * m * k * p1.y + k * k * p2.y,
+      };
     }
 
     function draw(t) {
       if (!W || !H) return;
       const c = core();
       const srcs = sources();
-
       ctx.clearRect(0, 0, W, H);
 
-      const glow = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, Math.max(W, H) * 0.3);
-      glow.addColorStop(0, "rgba(240,163,42,0.17)");
-      glow.addColorStop(1, "rgba(240,163,42,0)");
-      ctx.fillStyle = glow;
-      ctx.fillRect(0, 0, W, H);
+      if (pointer.active) {
+        pointer.x = lerp(pointer.x, pointer.tx, 0.08);
+        pointer.y = lerp(pointer.y, pointer.ty, 0.08);
+        const g = ctx.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 180);
+        g.addColorStop(0, "rgba(240,163,42,0.10)");
+        g.addColorStop(1, "rgba(240,163,42,0)");
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, W, H);
+      }
+
+      ctx.globalCompositeOperation = "lighter";
+
+      ambient.forEach((a) => {
+        a.x += a.vx;
+        a.y += a.vy;
+        if (a.y < -4) {
+          a.y = H + 4;
+          a.x = rand(0, W);
+        }
+        if (a.x < -4) a.x = W + 4;
+        if (a.x > W + 4) a.x = -4;
+        ctx.globalAlpha = a.a;
+        ctx.fillStyle = "#f4f4f5";
+        ctx.beginPath();
+        ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
 
       const bp = clamp((t - 800) / 1000, 0, 1);
       if (bp > 0) {
-        srcs.forEach((s) => {
+        srcs.forEach((s, i) => {
+          const c1 = control(c, s, i, t);
           const ex = lerp(c.x, s.x, bp);
           const ey = lerp(c.y, s.y, bp);
-          const grad = ctx.createLinearGradient(c.x, c.y, s.x, s.y);
-          grad.addColorStop(0, "rgba(240,163,42,0.7)");
-          grad.addColorStop(1, "rgba(240,163,42,0.12)");
-          ctx.strokeStyle = grad;
-          ctx.lineWidth = 1.3;
+          const cx = lerp(c.x, c1.x, bp);
+          const cy = lerp(c.y, c1.y, bp);
+
           ctx.beginPath();
           ctx.moveTo(c.x, c.y);
-          ctx.lineTo(ex, ey);
+          ctx.quadraticCurveTo(cx, cy, ex, ey);
+          ctx.strokeStyle = "rgba(240,163,42,0.06)";
+          ctx.lineWidth = 6;
+          ctx.stroke();
+
+          const grad = ctx.createLinearGradient(c.x, c.y, ex, ey);
+          grad.addColorStop(0, "rgba(240,163,42,0.75)");
+          grad.addColorStop(1, "rgba(240,163,42,0.10)");
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 1.2;
           ctx.stroke();
         });
       }
@@ -648,81 +759,135 @@ const mailto =
       packets = packets.filter((p) => t - p.t0 < p.dur);
       packets.forEach((p) => {
         const s = srcs[p.s];
-        const k = ease(clamp((t - p.t0) / p.dur, 0, 1));
-        const x = lerp(s.x, c.x, k);
-        const y = lerp(s.y, c.y, k);
-        ctx.save();
+        const c1 = control(c, s, p.s, t);
+        const k = clamp((t - p.t0) / p.dur, 0, 1);
+        const pos = bezier(s, c1, c, k);
+        p.trail.push(pos);
+        if (p.trail.length > 5) p.trail.shift();
+        p.trail.forEach((pt, idx) => {
+          ctx.globalAlpha = (idx / p.trail.length) * 0.5;
+          ctx.fillStyle = ACCENT;
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, 1.5, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1;
         ctx.shadowColor = ACCENT;
         ctx.shadowBlur = 18;
-        ctx.fillStyle = ACCENT;
+        ctx.fillStyle = HOT;
         ctx.beginPath();
-        ctx.arc(x, y, 2.6, 0, Math.PI * 2);
+        ctx.arc(pos.x, pos.y, 2.6, 0, Math.PI * 2);
         ctx.fill();
-        ctx.restore();
+        ctx.shadowBlur = 0;
       });
 
       alerts.forEach((a) => {
-        const capP = clamp((t - a.cap) / 700, 0, 1);
-        if (capP >= 1) return;
-        const k = ease(capP);
-        const jx = Math.sin((t / 900) * a.sp + a.ph) * 2.5;
-        const jy = Math.cos((t / 800) * a.sp + a.ph) * 2.5;
-        const x = lerp(a.x + jx, c.x, k);
-        const y = lerp(a.y + jy, c.y, k);
-        ctx.globalAlpha = (1 - capP) * 0.9;
+        if (a.dead) return;
+        if (!a.captured && t >= a.cap) {
+          a.captured = true;
+          a.vx = rand(-0.6, 0.6);
+          a.vy = rand(-0.6, 0.6);
+        }
+        if (a.captured) {
+          const dx = c.x - a.x;
+          const dy = c.y - a.y;
+          a.vx += dx * 0.014 - dy * 0.003;
+          a.vy += dy * 0.014 + dx * 0.003;
+          a.vx *= 0.9;
+          a.vy *= 0.9;
+          a.x += a.vx;
+          a.y += a.vy;
+          if (Math.hypot(dx, dy) < 8) {
+            a.dead = true;
+            pulse = Math.min(1, pulse + 0.35);
+            rings.push({ t0: t, dur: 600, max: 34 });
+            return;
+          }
+        } else {
+          a.x = a.x0 + Math.sin((t / 900) * a.sp + a.ph) * 3;
+          a.y = a.y0 + Math.cos((t / 800) * a.sp + a.ph) * 3;
+        }
+        ctx.shadowColor = a.red ? RED : ACCENT;
+        ctx.shadowBlur = 10;
         ctx.fillStyle = a.red ? RED : ACCENT;
         ctx.beginPath();
-        ctx.arc(x, y, a.r * (1 - capP * 0.6), 0, Math.PI * 2);
+        ctx.arc(a.x, a.y, a.r * (a.captured ? 0.8 : 1), 0, Math.PI * 2);
         ctx.fill();
-        ctx.globalAlpha = 1;
+        ctx.shadowBlur = 0;
       });
+
+      rings = rings.filter((r) => t - r.t0 < r.dur);
+      rings.forEach((r) => {
+        const p = clamp((t - r.t0) / r.dur, 0, 1);
+        ctx.globalAlpha = (1 - p) * 0.5;
+        ctx.strokeStyle = ACCENT;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, 8 + p * r.max, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+      ctx.globalAlpha = 1;
+
+      pulse *= 0.92;
+      const halo = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, 130);
+      halo.addColorStop(0, `rgba(240,163,42,${0.18 + pulse * 0.2})`);
+      halo.addColorStop(1, "rgba(240,163,42,0)");
+      ctx.fillStyle = halo;
+      ctx.fillRect(0, 0, W, H);
 
       ctx.save();
       ctx.shadowColor = ACCENT;
-      ctx.shadowBlur = 32;
-      ctx.strokeStyle = "rgba(240,163,42,0.28)";
+      ctx.shadowBlur = 36;
+      ctx.strokeStyle = "rgba(240,163,42,0.22)";
       ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.arc(c.x, c.y, 42, 0, Math.PI * 2);
-      ctx.stroke();
-
-      ctx.strokeStyle = "rgba(240,163,42,0.10)";
       ctx.beginPath();
       ctx.arc(c.x, c.y, 58, 0, Math.PI * 2);
       ctx.stroke();
 
-      const ang = (t / 1000) * 1.4;
+      const scale = 1 + pulse * 0.25;
+      ctx.strokeStyle = "rgba(240,163,42,0.30)";
+      ctx.beginPath();
+      ctx.arc(c.x, c.y, 42 * scale, 0, Math.PI * 2);
+      ctx.stroke();
+
+      const ang = (t / 1000) * 1.5;
       ctx.strokeStyle = ACCENT;
       ctx.lineWidth = 2.5;
       ctx.beginPath();
-      ctx.arc(c.x, c.y, 42, ang, ang + 1.35);
+      ctx.arc(c.x, c.y, 42 * scale, ang, ang + 1.4);
       ctx.stroke();
 
-      const pulse = 4.2 + Math.sin(t / 260) * 0.9;
-      ctx.fillStyle = ACCENT;
+      const dot = (4.2 + Math.sin(t / 260) * 0.9) * scale;
+      ctx.fillStyle = HOT;
       ctx.beginPath();
-      ctx.arc(c.x, c.y, pulse, 0, Math.PI * 2);
+      ctx.arc(c.x, c.y, dot, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
 
       if (t > 3900) {
-        const p = clamp((t - 3900) / 900, 0, 1);
-        ctx.globalAlpha = (1 - p) * 0.45;
+        const p = clamp((t - 3900) / 1000, 0, 1);
+        ctx.globalAlpha = (1 - p) * 0.5;
         ctx.strokeStyle = ACCENT;
-        ctx.lineWidth = 1.5;
+        ctx.lineWidth = 1.4;
         ctx.beginPath();
-        ctx.arc(c.x, c.y, 42 + p * 120, 0, Math.PI * 2);
+        ctx.arc(c.x, c.y, 42 + p * 150, 0, Math.PI * 2);
         ctx.stroke();
         ctx.globalAlpha = 1;
       }
+
+      const sy = (t * 0.06) % H;
+      ctx.fillStyle = "rgba(240,163,42,0.035)";
+      ctx.fillRect(0, sy, W, 1);
+
+      ctx.globalCompositeOperation = "source-over";
     }
 
     function frame(now) {
       if (!running) return;
       const t = now - start;
-      while (t > nextSpawn && nextSpawn < 3900 && packets.length < 50) {
-        packets.push({ s: packets.length % 3, t0: nextSpawn, dur: 650 });
-        nextSpawn += 190;
+      while (t > nextSpawn && nextSpawn < 3900 && packets.length < 60) {
+        packets.push({ s: packets.length % 3, t0: nextSpawn, dur: 700, trail: [] });
+        nextSpawn += 170;
       }
       draw(t);
       raf = requestAnimationFrame(frame);
@@ -748,7 +913,7 @@ const mailto =
 
       if (reduced) {
         setState(3);
-        draw(4200);
+        draw(6000);
         return;
       }
 
@@ -757,6 +922,21 @@ const mailto =
       });
       raf = requestAnimationFrame(frame);
     }
+
+    sim.addEventListener("pointermove", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      pointer.tx = e.clientX - rect.left;
+      pointer.ty = e.clientY - rect.top;
+      if (!pointer.active) {
+        pointer.x = pointer.tx;
+        pointer.y = pointer.ty;
+      }
+      pointer.active = true;
+    });
+
+    sim.addEventListener("pointerleave", () => {
+      pointer.active = false;
+    });
 
     const io = new IntersectionObserver(
       (entries) => {
