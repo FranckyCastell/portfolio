@@ -3,12 +3,12 @@ import type { APIRoute } from 'astro';
 const SITE_URL = 'https://francastell.com';
 
 const routes = [
-  { path: '/', lastmod: '2026-07-19', changefreq: 'monthly', priority: 1.0 },
-  { path: '/about', lastmod: '2026-07-19', changefreq: 'monthly', priority: 0.9 },
-  { path: '/experience', lastmod: '2026-07-19', changefreq: 'yearly', priority: 0.7 },
-  { path: '/projects', lastmod: '2026-07-19', changefreq: 'monthly', priority: 0.9 },
-  { path: '/stack', lastmod: '2026-07-19', changefreq: 'yearly', priority: 0.7 },
-  { path: '/contact', lastmod: '2026-07-19', changefreq: 'yearly', priority: 0.8 },
+  { path: '/', lastmod: '2026-11-27', changefreq: 'monthly', priority: 1.0 },
+  { path: '/about', lastmod: '2026-11-27', changefreq: 'monthly', priority: 0.9 },
+  { path: '/experience', lastmod: '2026-11-27', changefreq: 'yearly', priority: 0.7 },
+  { path: '/projects', lastmod: '2026-11-27', changefreq: 'monthly', priority: 0.9 },
+  { path: '/stack', lastmod: '2026-11-27', changefreq: 'yearly', priority: 0.7 },
+  { path: '/contact', lastmod: '2026-11-27', changefreq: 'yearly', priority: 0.8 },
 ];
 
 export const GET: APIRoute = () => {
