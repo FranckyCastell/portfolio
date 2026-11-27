@@ -254,55 +254,106 @@ const mailto =
 
     <!-- MEMORY -->
     <section class="border-t border-[var(--color-border)]">
-      <div class="mx-auto grid w-full max-w-5xl gap-12 px-6 py-16 md:grid-cols-[1.1fr_0.9fr] md:items-center md:py-20">
-        <div>
-          <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-5)]">Memoria y aprendizaje</p>
-          <h2 class="mt-3 font-display text-2xl md:text-3xl font-semibold leading-tight text-[var(--color-ink)]">
-            No empieza de cero cada vez.
-          </h2>
-          <p class="mt-4 max-w-xl text-base leading-relaxed text-[var(--color-ink-3)]">
+      <div class="mx-auto w-full max-w-5xl px-6 py-16 md:py-20">
+        <div class="grid gap-6 md:grid-cols-[1fr_1.1fr] md:items-end md:gap-12">
+          <div>
+            <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-ink-5)]">Memoria y aprendizaje</p>
+            <h2 class="mt-3 font-display text-2xl md:text-3xl font-semibold leading-tight text-[var(--color-ink)]">
+              No empieza de cero cada vez.
+            </h2>
+          </div>
+          <p class="text-base leading-relaxed text-[var(--color-ink-3)]">
             Un agente sin memoria es un buscador caro. Guarda dos tipos de contexto
             y los usa en la siguiente investigación.
           </p>
-          <ul class="mt-7 space-y-5">
-            {
-              memory.map((m) => (
-                <li class="flex gap-3">
-                  <span class="mt-1 shrink-0 text-[var(--color-accent)]">→</span>
-                  <div>
-                    <h3 class="text-base font-semibold text-[var(--color-ink)]">{m.title}</h3>
-                    <p class="mt-1 text-sm leading-relaxed text-[var(--color-ink-3)]">{m.body}</p>
-                  </div>
-                </li>
-              ))
-            }
-          </ul>
         </div>
 
-        <div class="flex justify-center">
-          <svg viewBox="0 0 360 360" class="loop" aria-hidden="true">
+        <div class="mt-10 grid gap-6 sm:grid-cols-3">
+          {
+            memory.map((m) => (
+              <div class="border-t border-[var(--color-border-strong)] pt-4">
+                <h3 class="text-base font-semibold text-[var(--color-ink)]">{m.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-[var(--color-ink-3)]">{m.body}</p>
+              </div>
+            ))
+          }
+        </div>
+
+        <div id="memory" data-step="0" class="mx-auto mt-12 max-w-3xl">
+          <svg viewBox="0 0 560 360" class="mem" aria-hidden="true">
             <defs>
-              <marker id="loop-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--color-accent)"></path>
+              <marker id="mem-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+                <path d="M0 0 L10 5 L0 10 Z" fill="var(--color-accent)"></path>
               </marker>
             </defs>
-            <circle cx="180" cy="180" r="120" fill="none" stroke="var(--color-border)" stroke-width="1" stroke-dasharray="3 7"></circle>
-            <path d="M180 60 A120 120 0 0 1 300 180" fill="none" stroke="var(--color-accent)" stroke-opacity="0.35" stroke-width="1" marker-end="url(#loop-arrow)"></path>
-            <path d="M300 180 A120 120 0 0 1 180 300" fill="none" stroke="var(--color-accent)" stroke-opacity="0.35" stroke-width="1" marker-end="url(#loop-arrow)"></path>
-            <path d="M180 300 A120 120 0 0 1 60 180" fill="none" stroke="var(--color-accent)" stroke-opacity="0.35" stroke-width="1" marker-end="url(#loop-arrow)"></path>
-            <path d="M60 180 A120 120 0 0 1 180 60" fill="none" stroke="var(--color-accent)" stroke-opacity="0.35" stroke-width="1" marker-end="url(#loop-arrow)"></path>
-            <circle cx="180" cy="60" r="4" fill="var(--color-accent)"></circle>
-            <circle cx="300" cy="180" r="4" fill="var(--color-accent)"></circle>
-            <circle cx="180" cy="300" r="4" fill="var(--color-accent)"></circle>
-            <circle cx="60" cy="180" r="4" fill="var(--color-accent)"></circle>
-            <text x="180" y="40">investiga</text>
-            <text x="300" y="164">registra</text>
-            <text x="180" y="330">evalúa</text>
-            <text x="60" y="164">mejora</text>
-            <circle r="3" fill="var(--color-accent)" class="loop-dot">
-              <animateMotion dur="9s" repeatCount="indefinite" path="M180,60 A120,120 0 1,1 179.9,60"></animateMotion>
-            </circle>
+
+            <g class="m-graph">
+              <path class="m-edge" d="M150 70 L70 150"></path>
+              <path class="m-edge" d="M150 70 L230 150"></path>
+              <path class="m-edge" d="M150 70 L95 255"></path>
+              <path class="m-edge" d="M150 70 L215 255"></path>
+              <path class="m-edge" d="M70 150 L95 255"></path>
+              <path class="m-edge" d="M230 150 L215 255"></path>
+              <path class="m-new-edge" d="M95 255 L230 150"></path>
+
+              <g class="m-node" style="--i:0">
+                <circle cx="150" cy="70" r="4.5"></circle>
+                <text x="150" y="58">api</text>
+              </g>
+              <g class="m-node" style="--i:1">
+                <circle cx="70" cy="150" r="4.5"></circle>
+                <text x="70" y="138">owner</text>
+              </g>
+              <g class="m-node" style="--i:2">
+                <circle cx="230" cy="150" r="4.5"></circle>
+                <text x="230" y="138">db</text>
+              </g>
+              <g class="m-node m-target" style="--i:3">
+                <circle cx="95" cy="255" r="4.5"></circle>
+                <text x="95" y="275">runbook</text>
+              </g>
+              <g class="m-node" style="--i:4">
+                <circle cx="215" cy="255" r="4.5"></circle>
+                <text x="215" y="275">env</text>
+              </g>
+
+              <circle class="m-target-ring" cx="95" cy="255" r="12"></circle>
+              <text class="m-new-label" x="95" y="300">aprendido</text>
+            </g>
+
+            <g class="m-timeline">
+              <line x1="420" y1="50" x2="420" y2="310"></line>
+              <g class="m-event" style="--i:0">
+                <circle cx="420" cy="80" r="3"></circle>
+                <text x="436" y="77">03:07</text>
+                <text class="m-tag" x="436" y="89">deploy</text>
+              </g>
+              <g class="m-event" style="--i:1">
+                <circle cx="420" cy="140" r="3"></circle>
+                <text x="436" y="137">14:20</text>
+                <text class="m-tag" x="436" y="149">pico</text>
+              </g>
+              <g class="m-event" style="--i:2">
+                <circle cx="420" cy="200" r="3"></circle>
+                <text x="436" y="197">09:41</text>
+                <text class="m-tag" x="436" y="209">cert</text>
+              </g>
+              <g class="m-event" style="--i:3">
+                <circle cx="420" cy="260" r="3"></circle>
+                <text x="436" y="257">22:05</text>
+                <text class="m-tag" x="436" y="269">db</text>
+              </g>
+              <circle class="m-active" cx="420" cy="140" r="7"></circle>
+            </g>
+
+            <path class="m-link" d="M420 140 C 340 140, 220 270, 95 255" marker-end="url(#mem-arrow)"></path>
+
+            <text class="m-col-label" x="150" y="340">semántica</text>
+            <text class="m-col-label" x="420" y="340">episódica</text>
           </svg>
+          <p class="mt-5 text-center font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--color-ink-5)]" data-mem-caption>
+            Semántica: servicios, owners, dependencias y runbooks.
+          </p>
         </div>
       </div>
     </section>
@@ -646,24 +697,175 @@ const mailto =
     border-color: color-mix(in oklab, var(--color-positive) 45%, transparent);
   }
 
-  .loop {
+  .mem {
     width: 100%;
-    max-width: 340px;
     height: auto;
+    overflow: visible;
   }
 
-  .loop text {
+  .mem text {
     font-family: var(--font-mono);
+    font-size: 10px;
+    text-anchor: middle;
+    fill: var(--color-ink-4);
+  }
+
+  .mem .m-tag {
+    font-size: 8px;
+    text-anchor: start;
+    fill: var(--color-ink-5);
+  }
+
+  .mem .m-col-label {
     font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    fill: var(--color-ink-5);
+  }
+
+  .mem line {
+    stroke: var(--color-border);
+    stroke-width: 1;
+  }
+
+  .mem .m-edge {
+    fill: none;
+    stroke: var(--color-border-strong);
+    stroke-width: 1;
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    transition: stroke-dashoffset 1s ease;
+  }
+
+  #memory[data-step="0"] .m-edge,
+  #memory[data-step="1"] .m-edge,
+  #memory[data-step="2"] .m-edge,
+  #memory[data-step="3"] .m-edge {
+    stroke-dashoffset: 0;
+  }
+
+  .mem .m-node {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    transition-delay: calc(var(--i) * 0.08s);
+  }
+
+  .mem .m-node circle {
+    fill: var(--color-ink-3);
+  }
+
+  #memory[data-step="0"] .m-node,
+  #memory[data-step="1"] .m-node,
+  #memory[data-step="2"] .m-node,
+  #memory[data-step="3"] .m-node {
+    opacity: 1;
+  }
+
+  .mem .m-event {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    transition-delay: calc(var(--i) * 0.12s + 0.15s);
+  }
+
+  .mem .m-event circle {
+    fill: var(--color-ink-4);
+  }
+
+  #memory[data-step="1"] .m-event,
+  #memory[data-step="2"] .m-event,
+  #memory[data-step="3"] .m-event {
+    opacity: 1;
+  }
+
+  .mem .m-active {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 1;
+    opacity: 0;
+  }
+
+  #memory[data-step="1"] .m-active,
+  #memory[data-step="2"] .m-active,
+  #memory[data-step="3"] .m-active {
+    opacity: 0.9;
+    animation: mem-blink 1.8s ease-in-out infinite;
+  }
+
+  .mem .m-link {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 1.2;
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    opacity: 0;
+    transition:
+      stroke-dashoffset 1.1s ease,
+      opacity 0.2s;
+  }
+
+  #memory[data-step="2"] .m-link,
+  #memory[data-step="3"] .m-link {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  .mem .m-new-edge {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 1;
+    stroke-dasharray: 3 4;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  #memory[data-step="3"] .m-new-edge {
+    opacity: 0.75;
+  }
+
+  .mem .m-target-ring {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 1;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  #memory[data-step="3"] .m-target-ring {
+    opacity: 0.8;
+  }
+
+  .mem .m-new-label {
+    font-size: 8px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    fill: var(--color-ink-4);
-    text-anchor: middle;
+    fill: var(--color-accent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  #memory[data-step="3"] .m-new-label {
+    opacity: 1;
+  }
+
+  #memory[data-step="3"] .m-target circle {
+    fill: var(--color-accent);
+  }
+
+  @keyframes mem-blink {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 1;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .loop-dot {
-      display: none;
+    .mem *,
+    .mem *::before {
+      transition-duration: 0.01ms !important;
+      animation: none !important;
     }
   }
 
@@ -1104,5 +1306,43 @@ const mailto =
       if (!played) return;
       if (size()) seed();
     });
+  }
+</script>
+
+<script>
+  const memory = document.getElementById("memory");
+  const memCaption = memory?.querySelector("[data-mem-caption]");
+
+  if (memory && memCaption) {
+    const steps = [
+      "Semántica: servicios, owners, dependencias y runbooks.",
+      "Episódica: lo que ya ha vivido, con fecha y resultado.",
+      "Cuando algo pasa, lo conecta con lo que sabe.",
+      "Y lo convierte en conocimiento para la próxima vez.",
+    ];
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const set = (n) => {
+      memory.dataset.step = String(n);
+      memCaption.textContent = steps[n];
+    };
+
+    if (reduced) {
+      set(3);
+    } else {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            io.disconnect();
+            set(0);
+            window.setTimeout(() => set(1), 1200);
+            window.setTimeout(() => set(2), 2600);
+            window.setTimeout(() => set(3), 4000);
+          }
+        },
+        { threshold: 0.35 }
+      );
+      io.observe(memory);
+    }
   }
 </script>
