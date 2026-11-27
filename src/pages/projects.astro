@@ -4,7 +4,7 @@ import { projects } from "@data/projects";
 
 const title = "Projects — Francesc Castell";
 const description =
-  "Selected projects: CloudIA, AgentForge, Homer CLI, AWS architectures, and self-hosted LLMOps infrastructure.";
+  "Selected projects: CloudIA, AgentForge, Homer CLI, AWS architectures, and self-hosted AI infrastructure.";
 
 const statusMap = {
   shipped: { label: "Shipped", color: "text-[var(--color-positive)]" },
@@ -28,6 +28,7 @@ const rest = projects.filter((p) => !p.featured);
     {
       featured.map((p, i) => (
         <article
+          id={p.slug}
           class="group relative rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 sm:p-8 transition duration-300 hover:border-[var(--color-border-strong)] hover:shadow-lg hover:-translate-y-0.5"
           data-reveal
           data-reveal-delay={String(i * 80)}

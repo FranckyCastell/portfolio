@@ -4,41 +4,43 @@ import { social } from "@data/site";
 import { projects } from "@data/projects";
 import { experiences } from "@data/experience";
 
-const title = "Francesc Castell · AWS DevOps Engineer & LLMOps Consultant";
+const title = "Francesc Castell · Cloud Engineer (AWS, Terraform, AI Operations)";
 const description =
-  "DevOps engineer & cloud architect in Barcelona. Specialised in AWS, Terraform, and LLMOps. Open to consulting engagements on AI-driven infrastructure operations.";
+  "Cloud engineer in Barcelona. I design and operate AWS infrastructure with Terraform, and build the read-only AI agents that investigate incidents on top of it.";
 
 const featured = projects.filter((p) => p.featured).slice(0, 3);
 const currentRole = experiences[0];
 ---
 
 <BaseLayout title={title} description={description} path="/" ogType="profile">
-  <section class="relative min-h-[92svh] flex items-center overflow-hidden">
-    <div class="absolute inset-0 grid-pattern opacity-30" aria-hidden="true"></div>
-    <div class="noise" aria-hidden="true"></div>
+  <section class="relative min-h-[72svh] flex items-center overflow-hidden">
+    <div class="absolute inset-0 grid-pattern opacity-25" aria-hidden="true"></div>
 
     <div class="container-prose relative py-20 sm:py-24">
-
+      <p
+        class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-ink-4)] mb-6"
+        data-reveal
+      >
+        Cloud Engineer · AWS &amp; Terraform · Barcelona
+      </p>
 
       <h1
-        class="font-display text-[clamp(2.5rem,11vw,7.5rem)] font-semibold leading-[0.95] tracking-[-0.03em] text-[var(--color-ink)]"
+        class="font-display text-[clamp(2.5rem,6vw,4.5rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-[var(--color-ink)]"
         data-reveal
         data-reveal-delay="80"
       >
-        Francesc<br />
-        <span class="text-gradient-accent">Castell</span>
+        Francesc <span class="text-gradient-accent">Castell</span>
       </h1>
 
       <p
-        class="mt-6 max-w-2xl text-lg md:text-2xl text-[var(--color-ink-2)] leading-[1.4] font-light"
+        class="mt-6 max-w-2xl text-lg md:text-xl text-[var(--color-ink-2)] leading-[1.5] font-light"
         data-reveal
         data-reveal-delay="160"
       >
-        DevOps engineer &amp; cloud architect.
-        I design <span class="text-[var(--color-ink)]">secure, automated AWS
-        infrastructure</span> and explore the infrastructure layer of
-        <span class="text-[var(--color-accent)]">LLMOps</span> — building
-        intelligent, self-healing systems.
+        I design and operate <span class="text-[var(--color-ink)]">AWS infrastructure</span> —
+        Terraform, ENS compliance, multi-account — and build the
+        <span class="text-[var(--color-accent)]">read-only AI agents</span> that investigate
+        incidents on top of it.
       </p>
 
       <div
@@ -50,27 +52,27 @@ const currentRole = experiences[0];
           href="/projects"
           class="inline-flex items-center gap-2 rounded-sm bg-[var(--color-ink)] px-6 py-3 text-sm font-semibold text-[var(--color-canvas)] transition duration-200 hover:bg-[var(--color-accent)] hover:shadow-[var(--shadow-glow)]"
         >
-          See selected projects
+          See projects
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M5 12h14M12 5l7 7-7 7"></path>
           </svg>
         </a>
         <a
-          href="/about"
+          href="/experience"
           class="inline-flex items-center gap-2 rounded-sm border border-[var(--color-border-strong)] bg-[var(--color-surface-2)] px-6 py-3 text-sm font-semibold text-[var(--color-ink)] transition-colors duration-200 hover:border-[var(--color-accent)]"
         >
-          About me
+          Experience
         </a>
       </div>
-    </div>
 
-    <div
-      class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[var(--color-ink-5)]"
-      data-reveal
-      data-reveal-delay="400"
-    >
-      <span class="font-mono text-xs uppercase tracking-[0.2em]">Scroll</span>
-      <span class="block h-10 w-px bg-gradient-to-b from-[var(--color-ink-5)] to-transparent"></span>
+      <div
+        class="mt-12 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-ink-5)]"
+        data-reveal
+        data-reveal-delay="320"
+      >
+        <span>AWS Certified Solutions Architect</span>
+        <span>Cloud Practitioner</span>
+      </div>
     </div>
   </section>
 
@@ -132,7 +134,7 @@ const currentRole = experiences[0];
         {
           featured.map((p, i) => (
             <a
-              href="/projects"
+              href={`/projects#${p.slug}`}
               class="group relative overflow-hidden rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition duration-300 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-2)] hover:-translate-y-0.5"
               data-reveal
               data-reveal-delay={String(i * 80)}
@@ -168,15 +170,15 @@ const currentRole = experiences[0];
         class="font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-tight tracking-tight text-[var(--color-ink)] mb-5"
         data-reveal
       >
-        Let's build something.
+        Let's work together.
       </h2>
       <p
         class="max-w-xl mx-auto text-base text-[var(--color-ink-3)] leading-relaxed mb-8"
         data-reveal
         data-reveal-delay="80"
       >
-        Open to selected consulting engagements around AWS architecture, Terraform
-        foundations, and AI-driven infrastructure operations.
+        Open to Cloud Engineer and Platform Engineer roles — Barcelona, hybrid,
+        or remote across the EU.
       </p>
       <a
         href="/contact"
@@ -184,7 +186,7 @@ const currentRole = experiences[0];
         data-reveal
         data-reveal-delay="160"
       >
-        Start a conversation
+        Get in touch
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M5 12h14M12 5l7 7-7 7"></path>
         </svg>

@@ -15,7 +15,7 @@ export const social = {
   linkedin: "https://www.linkedin.com/in/francesc-castell",
   github: "https://github.com/FranckyCastell",
   twitter: "https://x.com/francesccastell",
-  email: "francesc.castell8@gmail.com",
+  email: "hola@francastell.com",
   location: "Barcelona, Catalonia",
-  availability: "Open to selected consulting engagements",
+  availability: "Open to Cloud Engineer and Platform Engineer roles",
 } as const;

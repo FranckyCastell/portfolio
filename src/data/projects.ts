@@ -21,7 +21,7 @@ export const projects: Project[] = [
     year: "2026",
     status: "active",
     featured: true,
-    tags: ["Python", "LLMOps", "MCP", "Multi-Agent", "Google ADK", "AI"],
+    tags: ["Python", "Orchestration", "MCP", "Multi-Agent", "Google ADK", "AI"],
     links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/agentforge" }],
     highlights: [
       "11 LLM providers with per-agent configuration — OpenRouter, Anthropic, Groq, Gemini, local models.",
@@ -33,16 +33,16 @@ export const projects: Project[] = [
   {
     slug: "cloudia",
     name: "CloudIA",
-    tagline: "AI-Powered DevOps Assistant built on Amazon Bedrock AgentCore.",
+    tagline: "Read-only AI operations assistant built on Amazon Bedrock AgentCore.",
     description:
-      "Internal AI assistant for multi-account AWS operations at IThinkUPC. CloudIA investigates infrastructure incidents by correlating Centreon monitoring, Jira tickets, and live AWS APIs across 130+ client accounts through natural language — reducing diagnosis time from days to minutes. Built with configuration-over-code using Terraform, a SigV4-signed MCP proxy for cross-account read-only access, persistent memory, and a budget kill switch.",
+      "Internal AI operations assistant for multi-account AWS at IThinkUPC. CloudIA investigates infrastructure incidents by correlating Centreon monitoring, Jira tickets, and live AWS APIs across multiple client accounts through natural language. Built configuration-over-code in Terraform, with a SigV4-signed MCP proxy for cross-account read-only access, persistent memory, and a budget kill switch.",
     year: "2026",
     status: "active",
     featured: true,
     tags: ["AWS Bedrock", "AgentCore", "Terraform", "Python", "Go", "MCP"],
     highlights: [
       "Cross-account read-only AssumeRole via SigV4-signed MCP proxy.",
-      "Reduces incident diagnosis time from an average of 6 days to minutes across 130+ accounts.",
+      "Read-only by design: explicit tool allowlist, no write actions, and a cost ceiling per session.",
       "Persistent semantic and episodic memory strategies that accumulate knowledge.",
     ],
   },
@@ -68,7 +68,7 @@ export const projects: Project[] = [
     name: "Homer CLI",
     tagline: "One tool to unify the Terraform and Packer lifecycle.",
     description:
-      "A wrapper over Terraform and Packer that unifies and simplifies infrastructure lifecycle management. Flexible syntax and intuitive commands (plan, apply, build, unlock) ensure consistency. Adopted company-wide at IThinkUPC, saving the team ~5 hours per week in manual operations across 130+ client environments.",
+      "A wrapper over Terraform and Packer that unifies and simplifies infrastructure lifecycle management. Flexible syntax and intuitive commands (plan, apply, build, unlock) ensure consistency. Adopted company-wide at IThinkUPC, saving the team ~5 hours per week in manual operations across client environments.",
     year: "2025",
     status: "active",
     featured: true,
@@ -77,7 +77,7 @@ export const projects: Project[] = [
     highlights: [
       "Single command interface for plan/apply/build/destroy across multiple environments.",
       "Safe state-lock release with `homer unlock` without leaving the terminal.",
-      "Adopted by the entire DevOps team across 130+ client environments.",
+      "Adopted by the entire DevOps team across client environments.",
     ],
   },
   {
@@ -122,13 +122,13 @@ export const projects: Project[] = [
   },
   {
     slug: "llmops-private-rag",
-    name: "Private LLMOps · Self-hosted RAG",
+    name: "Private AI stack · Self-hosted RAG",
     tagline: "An on-premise RAG ecosystem with zero cloud dependency.",
     description:
       "End-to-end private AI infrastructure: Proxmox LXC hosts running Ollama for inference, Qdrant as the vector store, Redis for caching and session state, and n8n as the orchestration layer. Tailscale glues every node together with zero-trust networking. Designed for privacy-sensitive workloads where data cannot leave the perimeter.",
     year: "2025",
     status: "active",
-    tags: ["Proxmox", "Ollama", "Qdrant", "Redis", "n8n", "Tailscale", "LLMOps"],
+    tags: ["Proxmox", "Ollama", "Qdrant", "Redis", "n8n", "Tailscale", "Local AI"],
   },
   {
     slug: "aws-cloud-native-webapp",
@@ -150,6 +150,6 @@ export const projects: Project[] = [
     year: "2026",
     status: "active",
     tags: ["Astro", "Tailwind CSS", "TypeScript", "Cloudflare", "SEO"],
-    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/portfolio" }],
+    links: [{ label: "GitHub", url: "https://github.com/FranckyCastell/Portfolio" }],
   },
 ];

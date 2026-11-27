@@ -4,14 +4,14 @@ import { skillGroups } from "@data/skills";
 
 const title = "Stack — Francesc Castell";
 const description =
-  "Cloud, LLMOps, infrastructure, and automation — the tools I use daily: AWS, Terraform, Python, Bedrock, Ollama, GitHub Actions, Grafana.";
+  "Cloud, AI operations, infrastructure, and automation — the tools I use daily: AWS, Terraform, Python, Bedrock, Ollama, GitHub Actions, Grafana.";
 
-// Split: Cloud + LLMOps get featured treatment, rest go in grid
+// Split: Cloud + AI Operations get featured treatment, rest go in grid
 const featured = skillGroups.filter((g) =>
-  ["Cloud", "LLMOps & AI"].includes(g.category)
+  ["Cloud", "AI Operations"].includes(g.category)
 );
 const rest = skillGroups.filter(
-  (g) => !["Cloud", "LLMOps & AI"].includes(g.category)
+  (g) => !["Cloud", "AI Operations"].includes(g.category)
 );
 ---
 

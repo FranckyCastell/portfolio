@@ -14,7 +14,7 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
-    category: "LLMOps & AI",
+    category: "AI Operations",
     index: "02",
     items: [
       { name: "Amazon Bedrock" },

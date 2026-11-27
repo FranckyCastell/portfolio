@@ -23,7 +23,7 @@ export const experiences: Experience[] = [
     summary:
       "Architecting and managing multi-cloud infrastructure (AWS, Azure) for 130+ government, enterprise, and NGO clients. Leading internal tooling development and the adoption of AI-driven operations.",
     highlights: [
-      "Designed and deployed CloudIA, an AI-powered DevOps assistant (Bedrock AgentCore) that reduces incident diagnosis from 6 days to minutes across 130+ client accounts.",
+      "Designed and deployed CloudIA, a read-only AI operations assistant on Amazon Bedrock AgentCore that correlates Centreon, Jira, and AWS into a single investigation.",
       "Built Homer CLI (Python) to abstract Terraform and Packer workflows, saving the team ~5 hours/week company-wide.",
       "Developed 15+ reusable Terraform modules standardizing deployments and ensuring ENS compliance across all environments.",
       "Orchestrating advanced GitHub Actions pipelines with automated testing, security scans and seamless rollouts.",
