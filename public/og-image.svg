@@ -24,13 +24,13 @@
   <rect width="1200" height="630" fill="url(#grid)" mask="url(#gridMask)"/>
 
   <!-- Accent vertical bar -->
-  <rect x="80" y="180" width="4" height="180" fill="url(#accent)"/>
+  <rect x="80" y="180" width="4" height="150" fill="url(#accent)"/>
 
   <!-- Status badge -->
   <g transform="translate(80, 80)">
     <circle cx="6" cy="6" r="6" fill="#10b981"/>
     <text x="22" y="11" font-family="JetBrains Mono, monospace" font-size="13" fill="#a1a1aa" letter-spacing="2">
-      AVAILABLE · BARCELONA · UTC+1
+      OPEN TO ROLES · BARCELONA · UTC+1
     </text>
   </g>
 
@@ -41,13 +41,13 @@
 
   <!-- Role -->
   <text x="80" y="370" font-family="Inter, sans-serif" font-size="36" font-weight="500" fill="#d4d4d8">
-    <tspan fill="url(#accent)">DevOps Engineer</tspan>
-    <tspan fill="#a1a1aa">  ·  AWS  ·  Terraform  ·  LLMOps</tspan>
+    <tspan fill="url(#accent)">Cloud Engineer</tspan>
+    <tspan fill="#a1a1aa">  ·  AWS  ·  Terraform  ·  AI Operations</tspan>
   </text>
 
   <!-- Tagline -->
   <text x="80" y="440" font-family="Inter, sans-serif" font-size="22" fill="#71717a">
-    Automation, security &amp; scalable AWS infrastructure design.
+    Secure, automated AWS infrastructure and read-only AI agents.
   </text>
 
   <!-- Bottom tags -->
@@ -62,7 +62,7 @@
     </g>
     <g transform="translate(368, 0)">
       <rect x="0" y="0" width="120" height="32" fill="#0f0f12" stroke="#2a2a30"/>
-      <text x="14" y="21">LLMOps</text>
+      <text x="14" y="21">AIOps</text>
     </g>
     <g transform="translate(502, 0)">
       <rect x="0" y="0" width="180" height="32" fill="#0f0f12" stroke="#2a2a30"/>
@@ -72,6 +72,6 @@
 
   <!-- Domain -->
   <text x="1120" y="585" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="14" fill="#52525b" letter-spacing="1">
-    francesccastell.dev
+    francastell.com
   </text>
 </svg>
